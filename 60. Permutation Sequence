@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string ans;
+        for(int i=1;i<=n;i++)
+        {
+            ans.push_back('0'+ i);
+        }
+        int count=1;
+        sort(ans.begin(),ans.end());
+        do
+        {
+            if(count==k)
+            {
+                return ans;
+            }
+            count++;
+        }while(next_permutation(ans.begin(),ans.end()));
+
+        return "-1";
+        
+    }
+};
