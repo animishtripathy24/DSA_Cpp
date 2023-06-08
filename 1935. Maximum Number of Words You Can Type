@@ -1,0 +1,40 @@
+class Solution {
+public:
+
+    bool check_valid(string str,unordered_map<char,int>&m)
+    {
+        for(int i=0;i<str.size();i++)
+        {
+            auto it=m.find(str[i]);
+            if(it!=m.end())
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    int canBeTypedWords(string text, string brokenLetters) {
+        unordered_map<char,int>m;
+        for(int i=0;i<brokenLetters.size();i++)
+        {
+            m[brokenLetters[i]]++;
+        }
+        int j=0;
+        text.push_back(' ');
+        int count=0;
+        for(int i=0;i<text.size();i++)
+        {
+            if(text[i]==' ')
+            {
+                string temp(text.begin()+j,text.begin()+i);
+                if(check_valid(temp,m))
+                {
+                    count++;
+                }
+                j=i+1;
+            }
+        }
+        return count;
+        
+    }
+};
