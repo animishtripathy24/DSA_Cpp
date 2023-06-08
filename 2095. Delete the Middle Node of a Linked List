@@ -1,0 +1,42 @@
+//using fast and slow pointer approach  beats 85% of cpp solutions
+
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        //agar ek hi node hai...ya list hi empty hai...us case me null return hona chahiye
+        if(head==NULL || head->next==NULL)
+        {
+            return NULL;
+
+        }
+        
+        //agar 2 node hai toh head->next wale node ko delete karna hai...
+        if(head->next->next==NULL)
+        {
+            ListNode* temp=head->next;
+            head->next=NULL;
+            delete temp;
+            return head;
+        }
+
+        //agar >2 nodes hai..
+        ListNode* prev=NULL;
+        ListNode* slow=head;
+        ListNode* fast=head->next;
+
+        while(fast != NULL)
+        {
+            fast=fast->next;
+            if(fast !=NULL)
+            {
+                fast=fast->next;
+            }
+            prev=slow;
+            slow=slow->next;
+        }
+
+        prev->next=slow->next;
+        slow->next=NULL;
+        return head;
+    }
+};
