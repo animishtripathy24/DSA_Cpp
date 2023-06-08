@@ -1,0 +1,25 @@
+class Solution
+{
+public:
+    string kthPermutation(int n, int k)
+    {
+        string ans;
+        for(int i=1;i<=n;i++)
+        {
+            string temp=to_string(i);
+            ans+=temp;
+        }
+        sort(ans.begin(),ans.end());
+        int count=1;
+        do
+        {
+            if(count==k)
+            {
+                return ans;
+            }
+            count++;
+        }while(next_permutation(ans.begin(),ans.end()));
+        
+        return "-1";
+    }
+};
