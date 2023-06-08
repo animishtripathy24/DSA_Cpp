@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int index=-1;
+        //at first we have to find the dip
+        for(int i=nums.size()-2;i>=0;i--)
+        {
+            if(nums[i]<nums[i+1])
+            {
+                index=i;
+                break;
+            }
+        }
+
+        if(index==-1)//it means that the given string is lexographically the largest one
+        {
+            reverse(nums.begin(),nums.end());
+            return;
+        }
+
+        //now we have to find the samllest element which is greater than the element at the index
+
+        for(int i=nums.size()-1;i>index;i--)
+        {
+            if(nums[i]>nums[index])
+            {
+                swap(nums[i],nums[index]);
+                break;
+            }
+        }
+        
+        //now we have to reverse the rest part and return the array
+        reverse(nums.begin()+index+1,nums.end());
+    }
+};
