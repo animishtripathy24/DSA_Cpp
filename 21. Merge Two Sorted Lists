@@ -1,0 +1,65 @@
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        //if the both is empty in this case we return null
+        if(list1==NULL && list2==NULL)
+        {
+            return NULL;
+        }
+        //if the first list is empty in this case we return second list
+        if(list1==NULL)
+        {
+            return list2;
+        }
+        //if the second list is empty in this case we return first list
+        if(list2==NULL)
+        {
+            return list1;
+        }
+
+        ListNode* temp=new ListNode(-1);
+        ListNode* dup=temp;
+        ListNode* curr1=list1;
+        ListNode* curr2=list2;
+
+        while(curr1 != NULL && curr2 != NULL)
+        {
+            if(curr1->val <= curr2->val)
+            {
+                ListNode* temp1=new ListNode(curr1->val);
+                dup->next=temp1;
+                dup=temp1;
+                curr1=curr1->next;
+            }
+            else
+            {
+                ListNode* temp2=new ListNode(curr2->val);
+                dup->next=temp2;
+                dup=temp2;
+                curr2=curr2->next; 
+            }
+        }
+
+        //copying the remaining element of the list 1
+        while(curr1 != NULL)
+        {
+                ListNode* temp1=new ListNode(curr1->val);
+                dup->next=temp1;
+                dup=temp1;
+                curr1=curr1->next;
+        }
+
+        //copying thr remaining element of the list 2
+
+        while(curr2 != NULL)
+        {
+                ListNode* temp2=new ListNode(curr2->val);
+                dup->next=temp2;
+                dup=temp2;
+                curr2=curr2->next; 
+        }
+
+        return temp->next;
+        
+    }
+};
