@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& nums) {
+        unordered_map<int,int>m;
+        vector<int>res;
+        for(int i=0;i<nums[0].size();i++)
+        {
+            m[nums[0][i]]=nums.size();
+        }
+        int n=nums.size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<nums[i].size();j++)
+            {
+                auto it=m.find(nums[i][j]);
+                if(it != m.end())
+                {
+                    it->second--;
+                }
+            }
+        }
+
+        for(auto &value:m)
+        {
+            if(value.second==0)
+            {
+                res.push_back(value.first);
+            }
+        }
+        sort(res.begin(),res.end());
+        return res;
+        
+    }
+};
