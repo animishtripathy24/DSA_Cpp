@@ -36,7 +36,7 @@ public:
             temp->next=list2;
             swap(list1,list2);
         }
-
+        //we must have to return the res pointer as it was pointing to the list1
         return res;
     }
 };
