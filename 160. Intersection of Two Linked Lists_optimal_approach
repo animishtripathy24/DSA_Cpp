@@ -1,0 +1,54 @@
+class Solution {
+private:
+    int getLength(ListNode* head)
+    {
+        int count=0;
+        ListNode* curr=head;
+
+        while(curr != NULL)
+        {
+            count++;
+            curr=curr->next;
+        }
+        return count;
+    }
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        //if any of the list is NULL, we have to return NULL
+        if(headA==NULL || headB==NULL)
+        {
+            return NULL;
+        }
+        int count1=getLength(headA);
+        int count2=getLength(headB);
+
+        //headA pointer will always point to the list which has greater count;
+        if(count1<count2)
+        {
+            swap(headA,headB);
+        }
+
+        int diff=abs(count1-count2);
+
+        //move the headA pointer with diff steps
+        for(int i=1;i<=diff;i++)
+        {
+            headA=headA->next;
+        }
+
+        while(headA !=NULL && headB!=NULL)
+        {
+            if(headA==headB)
+            {
+                return headA;
+            }
+            headA=headA->next;
+            headB=headB->next;
+        }
+
+        return NULL;
+
+
+        
+    }
+};
