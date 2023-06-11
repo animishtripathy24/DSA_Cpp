@@ -1,0 +1,68 @@
+class Solution {
+private:
+    ListNode* reverse(ListNode* head)
+    {
+        ListNode* curr=head;
+        ListNode* prev=NULL;
+        ListNode* next=NULL;
+
+        while(curr != NULL)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+public:
+    bool isPalindrome(ListNode* head) {
+
+        //check if the list is empty or containing only one element
+
+        if(head==NULL || head->next==NULL)
+        {
+            return 1;
+        }
+
+        //find the leftmost middle of the linked list
+
+        ListNode* fast=head;
+        ListNode* slow=head;
+
+        while(fast->next != NULL && fast->next->next!=NULL)
+        {
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+
+        ListNode* temp=slow;
+
+        //revserse the part after slow
+
+        slow->next=reverse(slow->next);
+        
+        //slow ko ek aage badhana hai..
+
+        slow=slow->next;
+
+        //jab tak slow NULL na ho jaye check karte rehna hai..head->val and slow->val
+        
+        while(slow != NULL)
+        {
+            if(head->val != slow->val)
+            {
+                return 0;
+            }
+            head=head->next;
+            slow=slow->next;
+        }
+
+        //before returning make the list to its original val
+        temp->next=reverse(temp->next);
+
+        return 1;
+
+        
+    }
+};
