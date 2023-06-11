@@ -1,0 +1,54 @@
+class Solution {
+public:
+    void insertAtTail(ListNode* &tail,ListNode* curr)
+    {
+        tail->next=curr;
+        tail=curr;
+    }
+    ListNode* oddEvenList(ListNode* head) {
+        ListNode* oddHead = new ListNode();
+        ListNode* evenHead = new ListNode();
+
+        //make a temporary pointer
+        ListNode* oddTail=oddHead;
+        ListNode* evenTail=evenHead;
+
+        int count=1;
+
+        ListNode* curr = head;
+
+        while(curr != NULL)
+        {
+            if(count & 1)
+            {
+                insertAtTail(oddTail,curr);
+            }
+            else
+            {
+                insertAtTail(evenTail,curr);
+            }
+            count++;
+            curr=curr->next;
+        }
+        //for restoring the head pointer of the newly created list
+        ListNode* curr_new=oddHead->next;
+
+        //for merging
+
+        if(evenHead->next != NULL)
+        {
+            oddTail->next=evenHead->next;
+        }
+        evenTail->next=NULL;
+
+        evenHead->next=NULL;
+        oddHead->next=NULL;
+
+        //free the memory allocated.....
+        delete evenHead;
+        delete oddHead;
+
+        return curr_new;
+        
+    }
+};
