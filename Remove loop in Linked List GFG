@@ -1,0 +1,49 @@
+class Solution
+{
+    public:
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head)
+    {
+        //first of all we have to find the intersection point
+        Node* fast=head;
+        Node* slow=head;
+        
+        Node* intersection=NULL;
+        
+        while(fast && fast->next)
+        {
+            fast=fast->next->next;
+            slow=slow->next;
+            if(fast==slow)
+            {
+                intersection=slow;
+                break;
+            }
+        }
+        
+        if(intersection == NULL)
+        {
+            return;
+        }
+        
+        Node* entry=head;
+        
+        //move the entry and intersection by one one step
+        while(entry != intersection)
+        {
+            entry=entry->next;
+            intersection=intersection->next;
+        }
+        
+        Node* startingOfLoop=intersection;
+        
+        Node* temp=startingOfLoop;
+        // int count=1;
+        while(temp->next != startingOfLoop)
+        {
+            temp=temp->next;
+        }
+        
+        temp->next=NULL;
+    }
+};
