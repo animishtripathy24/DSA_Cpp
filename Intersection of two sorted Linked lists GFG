@@ -1,0 +1,30 @@
+Node* findIntersection(Node* head1, Node* head2)
+{
+    Node* dummy=new Node(-1);
+    Node* temp=dummy;
+    map<int,int>m;
+    Node* curr=head1;
+    
+    while(curr != NULL)
+    {
+        m[curr->data]++;
+        curr=curr->next;
+    }
+    
+    Node* curr2=head2;
+    
+    while(curr2 != NULL)
+    {
+        auto it=m.find(curr2->data);
+        if((it != m.end()) && ((it->second)>0))
+        {
+            Node* temp1=new Node(it->first);
+            temp->next=temp1;
+            temp=temp1;
+            (it->second)--;
+        }
+        curr2=curr2->next;
+    }
+    
+    return dummy->next;
+}
