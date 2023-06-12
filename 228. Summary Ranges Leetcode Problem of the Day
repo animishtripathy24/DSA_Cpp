@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        set<signed long long>s;
+        for(int i=0;i<nums.size();i++)
+        {
+            s.insert(nums[i]);
+        }
+
+        vector<string>v;
+        for(auto &value:s)
+        {
+            auto it=s.find(value-1);
+            if(it == s.end())
+            {
+                auto count=1;
+                auto x=value;
+                while(s.find(x+1)!=s.end())
+                {
+                    count++;
+                    x++;
+                }
+                if(count==1)
+                {
+                    v.push_back(to_string(value));
+                }
+                else
+                {
+                    string ans;
+                    string temp=to_string(value);
+                    ans+=temp;
+                    ans.push_back('-');
+                    ans.push_back('>');
+                    string temp2=to_string(value+count-1);
+                    ans+=temp2;
+                    v.push_back(ans);
+                    ans.clear();
+                }
+            }
+        }
+        return v;
+        
+    }
+};
