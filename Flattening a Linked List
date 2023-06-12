@@ -1,0 +1,34 @@
+Node* merge(Node* a,Node* b)
+{
+    Node* dummy=new Node(0);
+    Node* temp=dummy;
+    
+    while(a != NULL && b != NULL)
+    {
+        if(a->data < b->data)
+        {
+            Node* temp1=new Node(a->data);
+            temp->bottom=temp1;
+            temp=temp->bottom;
+            a=a->bottom;
+        }
+        else
+        {
+            Node* temp2=new Node(b->data);
+            temp->bottom=temp2;
+            temp=temp->bottom;
+            b=b->bottom;
+        }
+    }
+    
+    if(a)
+    {
+        temp->bottom=a;
+    }
+    else
+    {
+        temp->bottom=b;
+    }
+    
+    return dummy->bottom;
+}
