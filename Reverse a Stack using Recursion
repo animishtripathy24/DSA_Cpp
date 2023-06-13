@@ -1,0 +1,48 @@
+class Solution{
+public:
+
+    void insertAtBottom(stack<int>& myStack, int x)
+    {
+        //base case
+        if(myStack.empty())
+        {
+            myStack.push(x);
+            return;
+        }
+    
+        //top wale element ko side me rakh lena hai....
+    
+        int top=myStack.top();
+        myStack.pop();
+    
+        //recursive call
+        insertAtBottom(myStack,x);
+        
+        //jate jate top wale element ko saath le jana hai...
+        myStack.push(top);
+        
+    }
+    void Reverse(stack<int> &St){
+        //base case
+        if(St.empty())
+        {
+            return;
+        }
+        
+        //top wale element ko side me rakh lenge ....
+        
+        int top=St.top();
+        
+        //top wale element ko pop kar lenge...
+        St.pop();
+        
+        //recursive call
+        
+        Reverse(St);
+        
+        //jate jate top wale element ko insert at bottom kar dena hai...
+        
+        insertAtBottom(St,top);
+        
+    }
+};
