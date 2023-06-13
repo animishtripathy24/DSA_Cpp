@@ -1,0 +1,49 @@
+class Solution {
+  public:
+    int checkRedundancy(string s) {
+        //declaring a stack of char type
+        
+        stack<char>st;
+        
+        for(int i=0;i<s.size();i++)
+        {
+            //agar s[i] koi opening brackets hai...ya koi bhi operator toh usko stack me push kar lenge
+            
+            if(s[i]=='(' || s[i]=='+' || s[i]=='-' || s[i]=='*' ||s[i]=='/' )
+            {
+                st.push(s[i]);
+            }
+            else
+            {
+                //s[i] ya toh koi closing bracket hai...ya english ka letter
+                
+                if(s[i]==')')
+                {
+                    bool isRedundant=true;
+                    
+                    while(st.top() != '(')
+                    {
+                        char top=st.top();
+                        if(top=='+' || top=='-' || top=='*' || top=='/')
+                        {
+                            isRedundant=false;
+                        }
+                        st.pop();
+                    }
+                    if(isRedundant)
+                    {
+                        return 1;
+                    }
+                    //hume pata hai ki while loop se tab bahar aaya hoga jab usko koi opening bracket mila hoga toh uss opening bracket ko bhi remove karna hoga
+                    
+                    st.pop();
+                }
+            }
+            
+        }
+        //hamare string me koi bhi redundant bracket ni hai...isliye return 0 karna hoga 
+        
+        return 0;
+        
+    }
+};
