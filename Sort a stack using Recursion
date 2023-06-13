@@ -1,0 +1,42 @@
+void sortedInsert(stack<int>&s,int x)
+{
+    if(s.empty() || s.top()<x)
+    {
+        s.push(x);
+        return;
+    }
+    
+    int top=s.top();
+    s.pop();
+    
+    //recursive call
+    sortedInsert(s,x);
+    
+    //jate jate top wale ko saath lete jana hai...
+    
+    s.push(top);
+}
+void SortedStack :: sort()
+{
+   
+   //base case
+   if(s.empty())
+   {
+       return;
+   }
+   
+   //top wale element ko side me rakh lene hai...
+   int top=s.top();
+   
+   //ab top wale element ko pop kar dena hai....
+   
+   s.pop();
+   
+   //recusive call
+   SortedStack :: sort();
+   
+   //jate jate element ko sorted order me insert karte jana hai...
+   
+  sortedInsert(s,top); 
+   
+}
