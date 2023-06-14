@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool isFascinating(int n) {
+        if(n>=783)
+        {
+            return 0;
+        }
+        int num1=(2*n);
+        int num2=(3*n);
+        string ans;
+        string temp1=to_string(n);
+        ans+=temp1;
+        string temp2=to_string(num1);
+        ans+=temp2;
+        string temp3=to_string(num2);
+        ans+=temp3;
+        unordered_set<char>s;
+        for(int i=0;i<ans.size();i++)
+        {
+            s.insert(ans[i]);
+        }
+
+        unordered_map<char,int>m;
+        for(auto &it:s)
+        {
+            m[it]++;
+        }
+        int count=0;
+        for(auto &value:m)
+        {
+            if(value.first =='1' || value.first =='2' || value.first =='3' || value.first =='4' || value.     first =='5' || value.first =='6' || value.first =='7' || value.first =='8' || value.first =='9')
+            {
+                count++;
+            }
+        }
+
+        if(count==9)
+        {
+            return 1;
+        }
+        return 0;
+        
+    }
+};
