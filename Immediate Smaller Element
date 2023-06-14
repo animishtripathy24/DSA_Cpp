@@ -1,0 +1,34 @@
+class Solution{
+public:	
+    vector<int> nse(vector<int>&arr,int n)
+    {
+        //creating a stack
+        stack<int>s;
+        //creating a new vector
+        vector<int>NSE(n);
+        for(int i=0;i<n;i++)
+        {
+            if(!s.empty() && arr[i]<arr[s.top()])
+            {
+                NSE[s.top()]=arr[i];
+                s.pop();
+            }
+            s.push(i);
+        }
+        
+        while(!s.empty())
+        {
+            NSE[s.top()]=-1;
+            s.pop();
+        }
+        return NSE;
+    }
+	void immediateSmaller(vector<int>&arr, int n) {
+        vector<int>NSE=nse(arr,n);
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=NSE[i];
+        }
+	}
+
+};
