@@ -1,0 +1,28 @@
+class Solution {
+public:
+int count=0;
+    int numberOfSteps(int num) {
+        //base case
+
+        if(num<=0)
+        {
+            return count;
+        }
+
+        //if the given number is even
+        if(num & 1)
+        {
+            num=num-1;
+            count++;
+            return numberOfSteps(num);
+
+        }
+        else
+        {
+            num=num/2;
+            count++;
+            return numberOfSteps(num);
+        }
+        
+    }
+};
