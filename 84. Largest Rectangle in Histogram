@@ -1,0 +1,63 @@
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n=heights.size();
+        stack<int>s;
+        int rightSmall[n];
+        int leftSmall[n];
+
+        //here we are finding the left small element 
+        for(int i=0;i<n;i++)
+        {
+            while(!s.empty() && heights[s.top()]>=heights[i])
+            {
+                s.pop();
+            }
+
+            if(s.empty())
+            {
+                leftSmall[i]=0;
+            }
+            else
+            {
+                leftSmall[i]=s.top()+1;
+            }
+            s.push(i);
+        }
+
+        //now before finding the right small element the stack must be empty
+        while(!s.empty())
+        {
+            s.pop();
+        } 
+
+        //finding the right small element
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!s.empty() && heights[s.top()]>=heights[i])
+            {
+                s.pop();
+            }
+
+            if(s.empty())
+            {
+                rightSmall[i]=n-1;
+            }
+            else
+            {
+                rightSmall[i]=s.top()-1;
+            }
+            s.push(i);
+        }
+
+        int maxi=INT_MIN;
+
+        for(int i=0;i<n;i++)
+        {
+            maxi=max(maxi,heights[i]*(rightSmall[i]-leftSmall[i]+1));
+        }
+
+        return maxi;
+        
+    }
+};
