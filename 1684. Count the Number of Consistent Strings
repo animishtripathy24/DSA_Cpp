@@ -1,0 +1,34 @@
+class Solution {
+public:
+
+    bool check(string str,unordered_map<char,int>&m)
+    {
+        for(int i=0;i<str.size();i++)
+        {
+            auto it=m.find(str[i]);
+            if(it == m.end())
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    int countConsistentStrings(string allowed, vector<string>& words) {
+        unordered_map<char,int>m;
+        for(int i=0;i<allowed.size();i++)
+        {
+            m[allowed[i]]++;
+        }
+        int count=0;
+        for(auto &it:words)
+        {
+            if(check(it,m))
+            {
+                count++;
+            }
+        }
+
+        return count;
+        
+    }
+};
