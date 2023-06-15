@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string restoreString(string s, vector<int>& indices) {
+        int n=s.size();
+        map<int,char>m;
+        for(int i=0;i<n;i++)
+        {
+            m.insert(make_pair(indices[i],s[i]));
+        }
+        string ans;
+        for(auto &value:m)
+        {
+            ans.push_back(value.second);
+        }
+
+        return ans;
+        
+    }
+};
