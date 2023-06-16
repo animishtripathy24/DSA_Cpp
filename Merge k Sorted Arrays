@@ -1,0 +1,25 @@
+class Solution
+{
+    public:
+    //Function to merge k sorted arrays.
+    vector<int> mergeKArrays(vector<vector<int>> arr, int K)
+    {
+       //creating a min heap
+       priority_queue<int,vector<int>,greater<int>>mini;
+       for(int i=0;i<K;i++)
+       {
+           for(int j=0;j<K;j++)
+           {
+               mini.push(arr[i][j]);
+           }
+       }
+       vector<int>ans;
+       while(!mini.empty())
+       {
+           ans.push_back(mini.top());
+           mini.pop();
+       }
+       
+       return ans;
+    }
+};
