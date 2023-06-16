@@ -1,0 +1,35 @@
+class Solution{
+public:
+    ListNode *moveToFront(ListNode *head){
+        
+        //edge case
+        if(head ==NULL || head->next==NULL)
+        {
+            return head;
+        }
+        ListNode* curr=head;
+        
+        //making the list circular and finding the length
+        int len=1;
+        while(curr->next != NULL)
+        {
+            len++;
+            curr=curr->next;
+        }
+        
+        curr->next=head;
+        
+        ListNode* curr1=head;
+        
+        while(curr1->next != curr)
+        {
+            curr1=curr1->next;
+        }
+        
+        head=curr1->next;
+        curr1->next=NULL;
+        
+        return head;
+        
+    }
+};
