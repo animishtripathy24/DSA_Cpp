@@ -1,0 +1,36 @@
+class Solution{
+    public:
+    void segregateElements(int arr[],int n)
+    {
+        int count_positive=0;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]>0)
+            {
+                count_positive++;
+            }
+        }
+        int p=0;
+        int ne=count_positive;
+        vector<int>temp;
+        for(int i=0;i<n;i++)
+        {
+            temp.push_back(arr[i]);
+        }
+        
+        for(int i=0;i<temp.size();i++)
+        {
+            if(temp[i]>0)
+            {
+                arr[p]=temp[i];
+                p++;
+            }
+            else if(temp[i]<0)
+            {
+                arr[ne]=temp[i];
+                ne++;
+            }
+        }
+        
+    }
+};
