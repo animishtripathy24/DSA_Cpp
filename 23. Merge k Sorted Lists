@@ -1,0 +1,33 @@
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+        //creating a min heap
+        priority_queue<int,vector<int>,greater<int>>mini;
+
+        for(int i=0;i<lists.size();i++)
+        {
+            ListNode* curr=lists[i];
+
+            while(curr != NULL)
+            {
+                mini.push(curr->val);
+                curr=curr->next;
+            }
+        }
+
+        ListNode* dummy=new ListNode();
+        ListNode* temp=dummy;
+
+        while(!mini.empty())
+        {
+            ListNode* temp1=new ListNode(mini.top());
+            temp->next=temp1;
+            temp=temp->next;
+            mini.pop();
+        }
+
+        return dummy->next;
+        
+    }
+};
