@@ -1,0 +1,50 @@
+class Solution {
+public:
+
+    ListNode* Reverse(ListNode* head,int right)
+    {
+        //we have to reverse the first k nodes
+        int count=0;
+        ListNode* curr=head;
+        ListNode* prev=NULL;
+        ListNode* next=NULL;
+
+        while(curr != NULL && count < right)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+            count++;
+        }
+        if(next != NULL)
+        {
+            head->next=next;
+        }
+
+        return prev;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        //edge case
+        if(head==NULL || head->next==NULL)
+        {
+            return head;
+        }
+        //move the curr pointer to left steps
+        ListNode* dummy=new ListNode();
+        dummy->next=head;
+        ListNode*curr=dummy;
+
+        for(int i=1;i<left;i++)
+        {
+            curr=curr->next;
+        }
+
+        ListNode* newHead=Reverse(curr->next,(right-left+1));
+
+        curr->next=newHead;
+
+        return dummy->next;
+        
+    }
+};
