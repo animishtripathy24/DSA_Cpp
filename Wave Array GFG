@@ -1,0 +1,23 @@
+class Solution{
+    public:
+    // arr: input array
+    // n: size of array
+    //Function to sort the array into a wave-like array.
+    void convertToWave(int n, vector<int>& arr){
+        
+        int j=0;
+        int count=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            count++;
+            if(count==2)
+            {
+                sort(arr.begin()+j,arr.begin()+i+1,greater<int>());
+                j=i+1;
+                count=0;
+            }
+        }
+        
+    }
+};
