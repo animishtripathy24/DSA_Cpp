@@ -1,0 +1,130 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+private:
+    ListNode* reverse(ListNode* head)
+    {
+        ListNode* curr=head;
+        ListNode* next=NULL;
+        ListNode* prev=NULL;
+        while(curr != NULL)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+public:
+    vector<vector<int>> spiralMatrix(int m, int n, ListNode* head) {
+        ListNode* new_head=reverse(head);
+        stack<int>s;
+        ListNode* curr=new_head;
+        while(curr != NULL)
+        {
+            s.push(curr->val);
+            curr=curr->next;
+        }
+        if(n==1)
+        {
+            vector<vector<int>>ans;
+            while(!s.empty())
+            {
+                vector<int>v(1,s.top());
+                ans.push_back(v);
+                s.pop();
+            }
+            return ans;
+        }
+        vector<vector<int>>v(m,vector<int>(n,-1));
+        int r=m;
+        int c=n;
+
+        int top=0;
+        int bottom=r-1;
+        int left=0;
+        int right=c-1;
+
+        int count=0;
+        int total=r*c;
+
+    while(count<total)
+    {
+
+        //first row starting from left to right and top is constant
+        for(int i=left;count<total && i<=right;i++)
+        {
+            if(s.size()>0)
+            {
+                v[top][i]=s.top();
+                s.pop();
+            }
+            else
+            {
+                v[top][i]=-1;
+            }
+            count++;
+        }
+        top++;
+
+        //last column starting from top to bottom constant is right
+        for(int i=top;count<total && i<=bottom;i++)
+        {
+            if(s.size()>0)
+            {
+                v[i][right]=s.top();
+                s.pop();
+            }
+            else
+            {
+                v[i][right]=-1;
+            }
+            count++;
+        }
+        right--;
+
+        //last row starting from right to left and bottom is constant
+        for(int i=right;count<total && i>=left;i--)
+        {
+            if(s.size()>0)
+            {
+                v[bottom][i]=s.top();
+                s.pop();
+            }
+            else
+            {
+                v[bottom][i]=-1;
+            }
+            count++;
+        }
+        bottom--;
+
+        //first column starting from bottom to top and constant is left
+
+        for(int i=bottom;i>=top;i--)
+        {
+            if(s.size()>0)
+            {
+                v[i][left]=s.top();
+                s.pop();
+            }
+            else
+            {
+                v[i][left]=-1;
+            }
+            count++;
+        }
+        left++;
+    }
+        return v;
+    }
+};
