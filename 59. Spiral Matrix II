@@ -1,0 +1,68 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        if(n==1)
+        {
+            return {{1}};
+        }
+        int sqr=n*n;
+        stack<int>s;
+        for(int i=sqr;i>=1;i--)
+        {
+            s.push(i);
+        }
+        vector<vector<int>>v(n,vector<int>(n));
+        int r=n;
+        int c=n;
+
+        int top=0;
+        int bottom=r-1;
+        int left=0;
+        int right=c-1;
+
+        int count=0;
+        int total=r*c;
+
+    while(count<total)
+    {
+
+        //first row starting from left to right and top is constant
+        for(int i=left;count<total && i<=right;i++)
+        {
+            v[top][i]=s.top();
+            s.pop();
+            count++;
+        }
+        top++;
+
+        //last column starting from top to bottom constant is right
+        for(int i=top;count<total && i<=bottom;i++)
+        {
+            v[i][right]=s.top();
+            s.pop();
+            count++;
+        }
+        right--;
+
+        //last row starting from right to left and bottom is constant
+        for(int i=right;count<total && i>=left;i--)
+        {
+            v[bottom][i]=s.top();
+            s.pop();
+            count++;
+        }
+        bottom--;
+
+        //first column starting from bottom to top and constant is left
+
+        for(int i=bottom;i>=top;i--)
+        {
+            v[i][left]=s.top();
+            s.pop();
+            count++;
+        }
+        left++;
+    }
+        return v;
+    }
+};
