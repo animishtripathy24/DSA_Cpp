@@ -1,0 +1,64 @@
+/*
+  Pairwise swap a linked list
+  The input list will have at least one element
+  node is defined as
+
+struct Node
+{
+    int data;
+    struct Node* next;
+
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+
+}*head;
+*/
+class Solution
+{
+    public:
+    int getLength(struct Node* head)
+    {
+        struct Node* curr=head;
+        int count=0;
+        while(curr != NULL)
+        {
+            count++;
+            curr=curr->next;
+        }
+        return count;
+    }
+    struct Node* kReverse(struct Node* head,int k,int len)
+    {
+        if(len<k)
+        {
+            return head;
+        }
+        //we have to reverse the first k groups
+        int count=0;
+        struct Node* curr=head;
+        struct Node* prev=NULL;
+        struct Node* next=NULL;
+        while(curr != NULL && count < k)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+            count++;
+        }
+        if(next != NULL)
+        {
+            head->next=kReverse(next,k,len-k);
+        }
+        
+        return prev;
+    }
+    Node* pairWiseSwap(struct Node* head) 
+    {
+        int len=getLength(head);
+        int k=2;
+        return kReverse(head,k,len);
+    }
+};
