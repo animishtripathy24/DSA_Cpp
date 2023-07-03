@@ -1,0 +1,21 @@
+class Solution
+{
+    public:
+    void flattenBT(Node* root,Node* &prev)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        flattenBT(root->right,prev);
+        flattenBT(root->left,prev);
+        root->right=prev;
+        root->left=NULL;
+        prev=root;
+    }
+    void flatten(Node *root)
+    {
+        Node* prev=NULL;
+        flattenBT(root,prev);
+    }
+};
