@@ -1,0 +1,58 @@
+/* Linked List Node
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+}; */
+
+class Solution
+{
+public:
+    int getLength(Node* head)
+    {
+        int count=0;
+        Node* curr=head;
+        while(curr != NULL)
+        {
+            count++;
+            curr=curr->next;
+        }
+        return count;
+    }
+    int intersectPoint(Node* head1, Node* head2)
+    {
+        //at first we have to count the length of both the linked list
+        int count1=getLength(head1);
+        int count2=getLength(head2);
+        
+        //the head1 pointer will always points to the list with greater node count 
+        if(count2>count1)
+        {
+            swap(head1,head2);
+        }
+        
+        //then we have to calculate the difference
+        int diff=abs(count1-count2);
+        
+        //we have to move the haed1 pointer to diff steps
+        for(int i=1;i<=diff;i++)
+        {
+            head1=head1->next;
+        }
+        
+        //then we have to move the head1 pointer and head2 pointer by one steps
+        while(head1 != NULL && head2!= NULL)
+        {
+            if(head1==head2)
+            {
+                return head1->data;
+            }
+            head1=head1->next;
+            head2=head2->next;
+        }
+        return -1;
+    }
+};
