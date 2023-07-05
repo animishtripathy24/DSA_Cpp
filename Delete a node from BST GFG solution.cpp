@@ -14,7 +14,7 @@ Node* helper(Node* root)
     }
     if(root->right==NULL)
     {
-        return root->right;
+        return root->left;
     }
     Node* rightChild=root->right;
     Node* lastRight=findLastRightChildOnLeft(root->left);
