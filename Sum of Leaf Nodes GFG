@@ -1,0 +1,33 @@
+/*Structure of the node of the binary tree is as
+struct Node
+{
+	int data;
+	Node *left, *right;
+};*/
+// function should return the sum of all the 
+// leaf nodes of the binary tree
+void solve(Node* root,vector<int>&leaf)
+{
+    if(!root)
+    {
+        return;
+    }
+    solve(root->left,leaf);
+    if(root->left==NULL && root->right==NULL)
+    {
+        leaf.push_back(root->data);
+        return;
+    }
+    solve(root->right,leaf);
+}
+int sumLeaf(Node* root)
+{
+    if(!root)
+    {
+        return 0;
+    }
+    vector<int>leaf;
+    solve(root,leaf);
+    int sum=accumulate(leaf.begin(),leaf.end(),0);
+    return sum;
+}
