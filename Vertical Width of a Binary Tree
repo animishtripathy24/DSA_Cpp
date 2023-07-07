@@ -1,0 +1,56 @@
+/*Structure of node of binary tree is as follows
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+*/
+
+
+//Function to find the vertical width of a Binary Tree.
+int verticalWidth(Node* root)
+{
+    if(!root)
+    {
+        return 0;
+    }
+        //we have to take a couple of data structure
+        queue<pair<Node*,int>>q; //{root,vertical}
+        
+        //we want ascending order of vertical hence map taken not unordered_map
+        map<int,int>m;//{vertical,node->data} 
+        
+        //initially we have to put the root into the queue
+        q.push({root,0});
+        
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            Node* temp=it.first;
+            //check whether the vertical exist or not 
+            if(m.find(it.second)==m.end())
+            {
+                m[it.second]=temp->data;
+            }
+            
+            //if left of root exist then push it into the queue
+            if(temp->left)
+            {
+                q.push({temp->left,(it.second-1)});
+            }
+            
+            //if right of root exist then push into the queue
+            if(temp->right)
+            {
+                q.push({temp->right,(it.second+1)});
+            }
+        }
+        return m.size();
+}
