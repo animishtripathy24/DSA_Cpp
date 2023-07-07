@@ -1,0 +1,40 @@
+//User function Template for C++
+
+/*// A Tree node
+struct Node
+{
+	int key;
+	struct Node *left, *right;
+};*/
+
+class Solution
+{
+    public:
+    void solve(Node* root,vector<int>&path,vector<vector<int>>&ans,int sum)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        path.push_back(root->key);
+        if(accumulate(path.begin(),path.end(),0)==sum)
+        {
+            ans.push_back(path);
+        }
+        solve(root->left,path,ans,sum);
+        solve(root->right,path,ans,sum);
+        path.pop_back();
+        return;
+    }
+    vector<vector<int>> printPaths(Node *root, int sum)
+    {
+        if(!root)
+        {
+            return {};
+        }
+        vector<int>path;
+        vector<vector<int>>ans;
+        solve(root,path,ans,sum);
+        return ans;
+    }
+};
