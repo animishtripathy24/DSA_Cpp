@@ -1,0 +1,46 @@
+//User function Template for C++
+/* Tree node structure  used in the program
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+}; */
+
+class Solution {
+  public:
+    vector<int> maximumValue(Node* node) {
+        if(!node)
+        {
+            return {};
+        }
+        queue<Node*>q;
+        //at first we  have to push the root node
+        q.push(node);
+        vector<int>ans;
+        while(!q.empty())
+        {
+            int size=q.size();
+            vector<int>level;
+            for(int i=0;i<size;i++)
+            {
+                Node* curr=q.front();
+                q.pop();
+                if(curr->left)
+                {
+                    q.push(curr->left);
+                }
+                if(curr->right)
+                {
+                    q.push(curr->right);
+                }
+                level.push_back(curr->data);
+            }
+            int maxi=*max_element(level.begin(),level.end());
+            ans.push_back(maxi);
+            
+        }
+        return ans;
+    }
+};
