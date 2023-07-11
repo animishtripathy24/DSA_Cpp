@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+TreeNode* solve(vector<int>&inorder,int iStart,int iEnd,vector<int>&preorder,int pStart,int pEnd,map<int,int>&m)
+{
+    if(pStart>pEnd || iStart>iEnd)
+    {
+        return NULL;
+    }
+
+    TreeNode* root=new TreeNode(preorder[pStart]);
+    int iRoot=m[root->val];
+    int numsLeft=iRoot-iStart;
+
+    root->left=solve(inorder,iStart,iRoot-1,preorder,pStart+1,pStart+numsLeft,m);
+    root->right=solve(inorder,iRoot+1,iEnd,preorder,pStart+numsLeft+1,pEnd,m);
+    return root;
+}
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+    vector<int>new_preorder(preorder.begin(),preorder.end());
+    sort(new_preorder.begin(),new_preorder.end());
+    vector<int>inorder(new_preorder.begin(),new_preorder.end());
+    map<int,int>m;
+    for(int i=0;i<inorder.size();i++)
+    {
+        m[inorder[i]]=i;
+    }
+    TreeNode* root=solve(inorder,0,inorder.size()-1,preorder,0,preorder.size()-1,m);
+    return root;
+    
+}
+};
