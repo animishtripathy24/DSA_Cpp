@@ -1,0 +1,47 @@
+/* This is the ListNode class definition
+
+class ListNode {
+public:
+	int data;
+	ListNode* next;
+
+	ListNode(int data) {
+		this->data = data;
+		this->next = NULL;
+	}
+};
+*/
+ListNode* FDL(ListNode* &list)
+{
+	ListNode* fast=list;
+	ListNode* slow=list;
+	
+	while(fast && fast->next)
+	{
+		fast=fast->next->next;
+		slow=slow->next;
+		if(slow==fast)
+		{
+			return slow;
+		}
+	}
+	return NULL;
+}
+ListNode* getStartingNodeOfLoop(ListNode* list){
+	if(list==NULL)
+	{
+		return NULL;
+	}
+	ListNode* intersection=FDL(list);
+	if(!intersection)
+	{
+		return NULL;
+	}
+	ListNode* slow=list;
+	while(slow != intersection)
+	{
+		slow=slow->next;
+		intersection=intersection->next;
+	}
+	return slow;
+}
