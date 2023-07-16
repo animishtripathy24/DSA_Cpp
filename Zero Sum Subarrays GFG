@@ -1,0 +1,27 @@
+//User function template for C++
+
+class Solution{
+public:
+    //Function to count subarrays with sum equal to 0.
+    long long int findSubarray(vector<long long int> &arr, int n ) {
+        unordered_map<int,int>m;
+        long long int ans=0;
+        long long int sum=0;
+        m[0]=1;
+        
+        for(int i=0;i<arr.size();i++)
+        {
+            sum+=arr[i];
+            if(m.find(sum) != m.end())
+            {
+                ans+=m[sum];
+                m[sum]++;
+            }
+            else
+            {
+                m[sum]=1;
+            }
+        }
+        return ans;
+    }
+};
