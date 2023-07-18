@@ -1,0 +1,44 @@
+#include <bits/stdc++.h> 
+/****************************************************************
+    Following is the class structure of the Node class:
+    class Node
+    {
+    public:
+        int data;
+        Node *next;
+        Node(int data)
+        {
+            this->data = data;
+            this->next = NULL;
+        }
+    };
+*****************************************************************/
+
+Node *removeDuplicates(Node *head)
+{
+    if(!head && !head->next)
+    {
+        return head;
+    }
+    Node* curr=head;
+    Node* prev=NULL;
+    unordered_map<int,int>m;
+    while(curr != NULL)
+    {
+        if(m.find(curr->data)==m.end())
+        {
+            m[curr->data]++;
+            prev=curr;
+            curr=curr->next;
+        }
+        else
+        {
+            Node* node_to_delete=curr;
+            curr=curr->next;
+            prev->next=curr;
+            node_to_delete->next=NULL;
+            delete node_to_delete;
+        }
+    }
+    return head;
+}
