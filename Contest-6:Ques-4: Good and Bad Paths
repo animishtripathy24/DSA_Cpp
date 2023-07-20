@@ -1,0 +1,166 @@
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+static bool ignore_case(int a,int b)
+{
+    return (a<=b);
+}
+static bool ignore_case1(int a,int b)
+{
+    return (a>b);
+}
+int countNodes(TreeNode<int>* root)
+{
+    if(root == NULL)
+    {
+        return 0;
+    }
+    return 1+countNodes(root->left)+countNodes(root->right);
+}
+void solve_good(TreeNode<int>* root,vector<int>&ans,int &good)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(root->left!=NULL && root->right==NULL)
+    {
+        ans.push_back(root->data);
+        if(is_sorted(ans.begin(),ans.end(),ignore_case))
+        {
+            good+=1;
+        }
+        solve_good(root->left,ans,good);
+        ans.pop_back();
+        return;
+    }
+    if(root->left==NULL && root->right!=NULL)
+    {
+        ans.push_back(root->data);
+        if(is_sorted(ans.begin(),ans.end(),ignore_case))
+        {
+            good+=1;
+        }
+        solve_good(root->right,ans,good);
+        ans.pop_back();
+        return;
+    }
+    if(root->left==NULL && root->right==NULL)
+    {
+        ans.push_back(root->data);
+        if(is_sorted(ans.begin(),ans.end(),ignore_case))
+        {
+            good+=1;
+        }
+        ans.pop_back();
+        return;
+    }
+    ans.push_back(root->data);
+    if(is_sorted(ans.begin(),ans.end(),ignore_case))
+    {
+        good+=1;
+    }
+    solve_good(root->left,ans,good);
+    solve_good(root->right,ans,good);
+    ans.pop_back();
+    return;
+
+}
+void goodsolve(TreeNode<int>* root,int& good)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    vector<int>ans;
+    solve_good(root,ans,good);
+    goodsolve(root->left,good);
+    goodsolve(root->right,good);
+}
+void solve_bad(TreeNode<int>* root,vector<int>&ans,int &bad)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(root->left!=NULL && root->right==NULL)
+    {
+        ans.push_back(root->data);
+        if(is_sorted(ans.begin(),ans.end(),ignore_case1))
+        {
+            bad+=1;
+        }
+        solve_bad(root->left,ans,bad);
+        ans.pop_back();
+        return;
+    }
+    if(root->left==NULL && root->right!=NULL)
+    {
+        ans.push_back(root->data);
+        if(is_sorted(ans.begin(),ans.end(),ignore_case1) )
+        {
+            bad+=1;
+        }
+        solve_bad(root->right,ans,bad);
+        ans.pop_back();
+        return;
+    }
+    if(root->left==NULL && root->right==NULL)
+    {
+        ans.push_back(root->data);
+        if(is_sorted(ans.begin(),ans.end(),ignore_case1) )
+        {
+            bad+=1;
+        }
+        ans.pop_back();
+        return;
+    }
+    ans.push_back(root->data);
+    if(is_sorted(ans.begin(),ans.end(),ignore_case1) )
+    {
+        bad+=1;
+    }
+    solve_bad(root->left,ans,bad);
+    solve_bad(root->right,ans,bad);
+    ans.pop_back();
+    return;
+
+}
+void badsolve(TreeNode<int>* root,int& bad)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    vector<int>ans;
+    solve_bad(root,ans,bad);
+    badsolve(root->left,bad);
+    badsolve(root->right,bad);
+}
+pair<int, int> countGoodBadPaths(TreeNode<int> *root){
+    int good=countNodes(root);
+    int bad=countNodes(root);
+    goodsolve(root,good);
+    badsolve(root,bad);
+    pair<int,int> p;
+    p.first=good-countNodes(root);
+    p.second=bad-countNodes(root);
+    return p;
+
+}
