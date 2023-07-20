@@ -1,0 +1,44 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+static bool ignore_case(int a,int b)
+{
+    return (a<=b);
+}
+void inorder(TreeNode<int>* root,vector<int>&v)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    inorder(root->left,v);
+    v.push_back(root->data);
+    inorder(root->right,v);
+}
+
+int validGame(TreeNode < int > * root) {
+   vector<int>v;
+   inorder(root,v);
+   if(is_sorted(v.begin(),v.end(),ignore_case))
+   {
+       return 1;
+   }
+   return 0;
+}
