@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+class Node
+{
+public:
+    int data;
+    Node* next;
+
+    //contructor
+    Node(int data)
+    {
+        this->data=data;
+        this->next=NULL;
+    }
+
+};
+void insertAtTail(Node* &tail,Node* curr)
+{
+    tail->next=curr;
+    tail=tail->next;
+}
+Node* reverse(Node* head)
+{
+    Node* curr=head;
+    Node* next=NULL;
+    Node* prev=NULL;
+    while(curr != NULL)
+    {
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+    return prev;
+}
+Node* kReverse(Node* head,int k,int len)
+{
+    if(len < k)
+    {
+        return head;
+    }
+
+    //we have to reverse the first k nodes
+    Node* curr=head;
+    Node* next=NULL;
+    Node* prev=NULL;
+    int count=0;
+    while(curr != NULL && count < k)
+    {
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+        count++;
+    }
+    if(next != NULL)
+    {
+        head->next=kReverse(next,k,len-k);
+    }
+    return prev;
+}
+stack<int> reverseTheGroups(stack<int> &s, int n, int k) {
+    int len=s.size();
+    Node* dummy=new Node(-1);
+    Node* temp=dummy;
+    while(!s.empty())
+    {
+        Node* newNode=new Node(s.top());
+        insertAtTail(temp,newNode);
+        s.pop();
+    }
+    Node* head=dummy->next;
+    temp->next=NULL;
+    Node* newHead=reverse(kReverse(head,k,len));
+
+    stack<int>st;
+    Node* curr=newHead;
+    while(curr != NULL)
+    {
+        st.push(curr->data);
+        curr=curr->next;
+    }
+    return st;
+}
