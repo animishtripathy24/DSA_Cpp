@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+/************************************************
+   
+   Following is the linkedList class structure:
+
+   class List {
+      public:
+          int data;
+          List *next;
+
+          List(int val) {
+              this->data = val;
+              next = NULL;
+          }
+          ~List() {
+              if (next != NULL) {
+                  delete next;
+              }
+          }
+   };
+
+*************************************************/
+void insertAtTail(List* &tail,List* curr)
+{
+    tail->next=curr;
+    tail=tail->next;
+}
+List* foldAndMerge(List *head) {
+
+   List* fast=head;
+   List* slow=head;
+   
+   //we have to find the rightMost middle element
+   while(fast && fast->next)
+   {
+       fast=fast->next->next;
+       slow=slow->next;
+   }
+   stack<int>s;
+   List* curr=head;
+   while(curr != slow)
+   {
+       s.push(curr->data);
+       curr=curr->next;
+   }
+   
+   List* dummy=new List(-1);
+   List* temp=dummy;
+   while(slow != NULL && !s.empty())
+   {
+       List* newNode=new List((slow->data) * (s.top()));
+       insertAtTail(temp,newNode);
+       slow=slow->next;
+       s.pop();
+   }
+   return dummy->next;
+}
