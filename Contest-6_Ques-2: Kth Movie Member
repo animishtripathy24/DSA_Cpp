@@ -1,0 +1,42 @@
+#include <bits/stdc++.h> 
+/************************************************
+   
+   Following is the linkedList class structure:
+
+   class List {
+    public:
+        int data;
+        List *next;
+        List() {};
+        List(int v){
+            data = v;
+            next = NULL;
+        };
+   };
+
+*************************************************/
+
+int kthMoney(List *head , int k) {
+
+      if(head == NULL)
+      {
+         return 0;
+      }
+
+      List* dummy=new List(-1);
+      dummy->next=head;
+      List* fast=dummy;
+      List* slow=dummy;
+
+      for(int i=1;i<=k;i++)
+      {
+         fast=fast->next;
+      }
+
+      while(fast != NULL)
+      {
+         fast=fast->next;
+         slow=slow->next;
+      }
+      return slow->data;
+}
