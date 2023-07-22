@@ -1,0 +1,58 @@
+/*Structure of the Node of the BST is as
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution
+{
+public:
+    void count_p(Node* root1,Node* root2,int& count,int x)
+    {
+        if(!root2)
+        {
+            return;
+        }
+        if(root1->data+root2->data==x)
+        {
+            count++;
+        }
+        else if(root1->data+root2->data<x)
+        {
+            count_p(root1,root2->right,count,x);
+        }
+        else
+        {
+            count_p(root1,root2->left,count,x);
+        }
+    }
+    void solve(Node* root1,Node* root2,int &count,int x)
+    {
+        if(!root1)
+        {
+            return;
+        }
+        count_p(root1,root2,count,x);
+        solve(root1->left,root2,count,x);
+        solve(root1->right,root2,count,x);
+    }
+    int countPairs(Node* root1, Node* root2, int x)
+    {
+        if(!root1 && !root2)
+        {
+            return 0;
+        }
+        int count=0;
+        solve(root1,root2,count,x);
+        
+        return count;
+    }
+};
