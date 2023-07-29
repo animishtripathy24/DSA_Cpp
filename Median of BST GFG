@@ -1,0 +1,45 @@
+/*
+Structure of the binary Search Tree is as
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+// your task is to complete the Function
+// Function should return median of the BST
+void inorder(struct Node* root,vector<int>&path)
+{
+    if(!root)
+    {
+        return;
+    }
+    inorder(root->left,path);
+    path.push_back(root->data);
+    inorder(root->right,path);
+}
+float findMedian(struct Node *root)
+{
+      if(!root)
+      {
+          return (float)0.0;
+      }
+      vector<int>path;
+      inorder(root,path);
+      float median = 0.0;
+      int n=path.size();
+        if(n & 1)
+        {
+            median = path[n/2];
+        }
+        else
+        {
+           median = (path[(n/2)-1]+path[n/2])/2.0;
+        }
+        return median;
+}
