@@ -1,0 +1,48 @@
+class Solution{
+    public:
+    void merge(vector<int>&arr1,vector<int>&arr2,vector<int>&path)
+    {
+        int i=0;
+        int j=0;
+        while(i<arr1.size() && j< arr2.size())
+        {
+            if(arr1[i]<=arr2[j])
+            {
+                path.push_back(arr1[i]);
+                i++;
+            }
+            else
+            {
+                path.push_back(arr2[j]);
+                j++;
+            }
+        }
+        while(i<arr1.size())
+        {
+            path.push_back(arr1[i]);
+            i++;
+        }
+        while(j<arr2.size())
+        {
+            path.push_back(arr2[j]);
+            j++;
+        }
+    }
+    double MedianOfArrays(vector<int>& array1, vector<int>& array2)
+    {
+          vector<int>path;
+          merge(array1,array2,path);
+          double median = 0.0;
+          int n=path.size();
+            if(n & 1)
+            {
+                median = path[n/2];
+            }
+            else
+            {
+               median = (path[(n/2)-1]+path[n/2])/2.0;
+            }
+            return median;    
+    
+    }
+};
