@@ -1,0 +1,49 @@
+class Solution {
+    private:
+        void dfs(int node,vector<bool> &visited,vector<int> adj[])
+        {
+            //mark the node in the visited array 
+            visited[node]=true;
+            
+            //traverse all its neighbours
+            for(auto it:adj[node])
+            {
+                if(!visited[it])
+                {
+                    dfs(it,visited,adj);
+                }
+            }
+        }
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n=isConnected.size();
+
+        //creating my own adjacency list
+        vector<int>adj[isConnected.size()];
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(isConnected[i][j]==1 && i != j)
+                {
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
+                }
+            }
+        }
+        int count=0;
+        //we have to make the visited array
+        vector<bool>visited(n+1,false);
+        for(int i=0;i<n;i++)
+        {
+            if(!visited[i])
+            {
+                count++;
+                dfs(i,visited,adj);
+            }
+        }
+        return count;
+        
+    }
+};
