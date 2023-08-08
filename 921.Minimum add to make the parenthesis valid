@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        stack<char>st;
+        for(int i=0;i<s.size();i++)
+        {
+            //agar koi bhi opening brackets hai..usko push kar dete hai..stack me
+            if(s[i]=='(')
+            {
+                st.push(s[i]);
+            }
+            else
+            {
+                //ye toh confirm hai..ki ye ek closing bracket hai...
+                if(!st.empty() && st.top()=='(')
+                {
+                    st.pop();
+                }
+                else
+                {
+                    st.push(s[i]);
+                }
+            }
+        }
+        return st.size();
+        
+    }
+};
