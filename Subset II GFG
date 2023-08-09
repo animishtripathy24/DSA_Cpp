@@ -1,0 +1,32 @@
+class Solution {
+private:
+    void solve(int index,vector<int>&nums,set<vector<int>>&s,vector<int>&ds)
+    {
+        if(index==nums.size())
+        {
+            s.insert(ds);
+            return;
+        }
+        //picking the element
+        ds.push_back(nums[index]);
+        solve(index+1,nums,s,ds);
+        
+        //not picking the element
+        ds.pop_back();
+        solve(index+1,nums,s,ds);
+    }
+  public:
+    vector<vector<int>> printUniqueSubsets(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
+        set<vector<int>>s;
+        vector<int>ds;
+        solve(0,nums,s,ds);
+        for(auto &value:s)
+        {
+            ans.push_back(value);
+        }
+        return ans;
+        
+    }
+};
