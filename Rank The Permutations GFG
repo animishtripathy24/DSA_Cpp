@@ -1,0 +1,32 @@
+class Solution{
+  public:
+  	    void solve(int index,string &S,set<string>&s)
+	    {
+	        if(index==S.size())
+	        {
+	            s.insert(S);
+	            return;
+	        }
+	        for(int j=index;j<S.size();j++)
+	        {
+	            swap(S[index],S[j]);
+	            solve(index+1,S,s);
+	            swap(S[index],S[j]);
+	        }
+	    }
+    long long findRank(string str) {
+        string str1=str;
+        set<string>s;
+		int index=0;
+		solve(index,str1,s);
+		long long count=0;
+		for(auto &value:s)
+		{
+		    count++;
+		    if(value==str)
+		    {
+		        return count;
+		    }
+		}
+    }
+};
