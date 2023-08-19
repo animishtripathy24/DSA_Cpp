@@ -1,0 +1,68 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        //at first we will calculate the size of the grid
+        int n=grid.size();
+        int m=grid[0].size();
+
+        //we will declare a queue data structure 
+        queue<pair<pair<int,int>,int>>q; // {{row,col},t}
+
+        //declaring a visited array
+        int vis[n][m];
+        //we will put all the cells into the queue which are rotten
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]==2)
+                {
+                    q.push({{i,j},0});
+                    //mark in the visited array
+                    vis[i][j]=2;
+                }
+                else
+                {
+                    vis[i][j]=0;
+                }
+            }
+        }
+        int max_time=0;
+        int drow[]={-1,0,1,0};
+        int dcol[]={0,1,0,-1};
+
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            int row=it.first.first;
+            int col=it.first.second;
+            int time=it.second;
+            max_time=max(max_time,time);
+            for(int i=0;i<4;i++)
+            {
+                int nrow=row+drow[i];
+                int ncol=col+dcol[i];
+                if(nrow >=0 && nrow <n && ncol>=0 && ncol<m && vis[nrow][ncol] !=2 && grid[nrow][ncol]==1 )
+                {
+                    q.push({{nrow,ncol},time+1});
+                    vis[nrow][ncol]=2;
+
+                }
+            }
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(vis[i][j]!=2 && grid[i][j]==1)
+                {
+                    return -1;
+                }
+            }
+        }
+        return max_time;
+
+    }
+};
