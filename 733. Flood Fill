@@ -1,0 +1,55 @@
+class Solution {
+private:
+    void bfs(int sr,int sc,vector<vector<int>>&image,int color,vector<vector<bool>>&vis)
+    {
+        int n=image.size();
+        int m=image[0].size();
+        //marking the row and column in the visited array
+        int row=sr;
+        int col=sc;
+        vis[row][col]=true;
+        int element=image[sr][sc];
+        image[row][col]=color;
+        //declaring a queue data structure
+        queue<pair<int,int>>q;
+        q.push({row,col});
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+
+            row=it.first;
+            col=it.second;
+            for(int delrow=-1;delrow <=1;delrow++)
+            {
+                for(int delcol=-1;delcol<=1;delcol++)
+                {
+                    //ignoring the diagonal elements
+                    if(abs(delrow)+abs(delcol)==2)
+                    {
+                        continue;
+                    }
+                    int nrow=row+delrow;
+                    int ncol=col+delcol;
+                    if((nrow>=0) && (nrow<n) && (ncol>=0) && (ncol<m) && (!vis[nrow][ncol]) && (image[nrow][ncol]==element))
+                    {
+                        vis[nrow][ncol]=true;
+                        image[nrow][ncol]=color;
+                        q.push({nrow,ncol});
+                    }
+                }
+            }
+        }
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        //at first we will find the rows and columns of the matrix
+        int n=image.size();
+        int m=image[0].size();
+        //we have to make a visited vector
+        vector<vector<bool>>vis(n,vector<bool>(m,false));
+        bfs(sr,sc,image,color,vis);
+        return image;
+        
+    }
+};
