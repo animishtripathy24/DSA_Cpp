@@ -1,0 +1,85 @@
+class Solution {
+public:
+    void bfs(int row,int col,vector<vector<char>>&board,vector<vector<int>>&vis)
+    {
+        int n=board.size();
+        int m=board[0].size();
+
+        queue<pair<int,int>>q;
+        //at first we have to mark the given rows and columns into the visited matrix
+        vis[row][col]=1;
+        q.push(make_pair(row,col));
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            int row=it.first;
+            int col=it.second;
+
+            for(int delrow=-1;delrow <=1;delrow++)
+            {
+                for(int delcol=-1;delcol<=1;delcol++)
+                {
+                    //removing the diagonal elements
+                    if(abs(delrow)+abs(delcol)==2)
+                    {
+                        continue;
+                    }
+                    int nrow=row+delrow;
+                    int ncol=col+delcol;
+                    if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && board[nrow][ncol]=='O')
+                    {
+                        vis[nrow][ncol]=1;
+                        q.push({nrow,ncol});
+                    }
+                }
+            }
+        }
+    }
+    void solve(vector<vector<char>>& board) {
+        //calculating the dimensions
+        int n=board.size();
+        int m=board[0].size();
+        //first we have to make a visited matrix
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        //now traversing through the rows and columns
+        for(int j=0;j<m;j++)
+        {
+            //first row
+            if(!vis[0][j] && board[0][j]=='O')
+            {
+                bfs(0,j,board,vis);
+            }
+            //last row
+            if(!vis[n-1][j] && board[n-1][j]=='O')
+            {
+                bfs(n-1,j,board,vis);
+            }
+        }
+        //now traversing in the first col and last column
+        for(int i=0;i<n;i++)
+        {
+            //first column
+            if(!vis[i][0] && board[i][0]=='O')
+            {
+                bfs(i,0,board,vis);
+            }
+            if(!vis[i][m-1] && board[i][m-1]=='O')
+            {
+                bfs(i,m-1,board,vis);
+            }
+        }
+        
+        //traversing in the board matrix
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(board[i][j]=='O' && !vis[i][j])
+                {
+                    board[i][j]='X';
+                }
+            }
+        }
+    }
+};
