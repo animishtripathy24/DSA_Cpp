@@ -1,0 +1,54 @@
+class Solution {
+private:
+    bool check(int start,vector<int>adj[],int vis[])
+    {
+        //at first we have to assign color 0 to the start node
+        vis[start]=0;
+        //then we have to declare a queue data structure
+        queue<int>q;
+        //we push the starting node into the queue data structure
+        q.push(start);
+        //then we have to iterate in the queue data structure
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            
+            //then we have to traverse in the adjacent nodes
+            for(auto it:adj[node])
+            {
+                if(vis[it]==-1)
+                {
+                    vis[it]=!vis[node];
+                    q.push(it);
+                }
+                else if(vis[it]==vis[node])
+                {
+                    return false;
+                }
+            }
+            
+        }
+        return true;
+    }
+public:
+	bool isBipartite(int V, vector<int>adj[]){
+	    //at first we have to make a visited array of size V and initialise it with -1
+	    int vis[V];
+	    for(int i=0;i<V;i++)
+	    {
+	        vis[i]=-1;
+	    }
+	    //then for connected components we have to iterate over
+	    for(int i=0;i<V;i++)
+	    {
+            if(vis[i]==-1)
+            {
+                if(check(i,adj,vis)==false)
+    	        {
+    	            return false;
+    	        }
+            }
+	    }
+	    return true;
+	}
