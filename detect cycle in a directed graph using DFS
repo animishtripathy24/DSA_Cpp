@@ -1,0 +1,53 @@
+class Solution {
+private:
+    bool dfs(int node,vector<int>adj[],int vis[],int pathVis[])
+    {
+        //at first we have to mark the visited and path visited
+        vis[node]=1;
+        pathVis[node]=1;
+        
+        //here we have to traverse for all the adjacent nodes
+        for(auto it:adj[node])
+        {
+            
+            //when the node is not visted
+            if(!vis[it])
+            {
+                if(dfs(it,adj,vis,pathVis)==true)
+                {
+                    return true;
+                }
+            }
+            
+            //when the node is visited as well as path visited
+            else if(pathVis[it])
+            {
+                return true;
+            }
+        }
+        //at last we have to make the path visited as 0
+        pathVis[node]=false;
+        return false;
+    }
+  public:
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        //at first we have to declare a visited array
+        int vis[V]={0};
+        //then we have to declare a path visited array
+        int pathVis[V]={0};
+        
+        //then we have to run a for loop for connected components
+        for(int i=0;i<V;i++)
+        {
+            if(!vis[i])
+            {
+                if(dfs(i,adj,vis,pathVis)==true)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
