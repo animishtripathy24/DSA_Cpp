@@ -1,0 +1,51 @@
+class Solution {
+  public:
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        //we will use the intuition of topo sort using bfs
+        //topo sort are only applicable for the directed acyclic graph
+        int indegree[V]={0};
+        
+        //now we have to traverse in the adjacency matrix
+        for(int i=0;i<V;i++)
+        {
+            for(auto it:adj[i])
+            {
+                indegree[it]++;
+            }
+        }
+        int count=0;//to store the count the number of edges
+        queue<int>q;
+        
+        //now we have to store the all the edges with the indegree zero
+        for(int i=0;i<V;i++)
+        {
+            if(indegree[i]==0)
+            {
+                q.push(i);
+            }
+        }
+        
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            
+            count++;
+            for(auto it:adj[node])
+            {
+                indegree[it]--;
+                if(indegree[it]==0)
+                {
+                    q.push(it);
+                }
+            }
+        }
+        if(count==V)
+        {
+            return false;
+        }
+        return true;
+        
+    }
+};
