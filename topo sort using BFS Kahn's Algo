@@ -1,0 +1,55 @@
+class Solution
+{
+	public:
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+        //at first we have to declare a indegeree array 
+        //that records the number of incoming edge to any node
+        int indegree[V]={0};
+        
+        //now we have to traverse in the adjacent matrix
+        for(int i=0;i<V;i++)
+        {
+            for(auto it:adj[i])
+            {
+                indegree[it]++;
+            }
+        }
+        
+        //now we have to declare a queue data structure and 
+        //insert all the nodes with zero indegree
+        queue<int>q;
+        for(int i=0;i<V;i++)
+        {
+            if(indegree[i]==0)
+            {
+                q.push(i);
+            }
+        }
+        //now we have to declare a topo array to store the result
+        vector<int>topo;
+        
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            
+            //we have to insert this node in the topo array
+            topo.push_back(node);
+            
+            
+            //traverse for all the adjacent nodes and 
+            //check whether the indegree becomes zero or not
+            for(auto it:adj[node])
+            {
+                indegree[it]--;
+                if(indegree[it]==0)
+                {
+                    q.push(it);
+                }
+            }
+        }
+        return topo;
+	}
+};
