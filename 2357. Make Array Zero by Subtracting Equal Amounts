@@ -1,0 +1,55 @@
+class Solution {
+private:
+    int calculateAns(vector<int>&ans,int &count)
+    {
+            int x=0;
+            count++;
+            for(int i=0;i<ans.size();i++)
+            {
+                if(ans[i]>0)
+                {
+                    x=ans[i];
+                }
+            }
+            for(int i=0;i<ans.size();i++)
+            {
+                if((ans[i]>0)&&(ans[i]<x))
+                {
+                    x=ans[i];
+                }
+
+            }
+            for(auto &value:ans)
+            {
+                if(value>0)  value-=x;
+            }
+            for(int i=0;i<ans.size();i++)
+            {
+                if(ans.at(i) != 0)
+                {
+                    calculateAns(ans,count);
+                }
+            }
+            return count;
+            
+    }
+public:
+    int minimumOperations(vector<int>& nums) {
+        if(nums.size()==1 && nums[0]==0)
+        {
+            return 0;
+        }
+
+        int count=0;
+
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]!=0)
+            {
+                return calculateAns(nums,count);
+            }
+        }
+        return count;
+        
+    }
+};
