@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        //handle the edge cases
+        if(!head || !head->next)
+        {
+            return head;
+        }
+        //declare an array
+        vector<int>v;
+        ListNode* curr=head;
+
+        //step-1:take out the odd part
+        while(curr->next && curr->next->next)
+        {
+            v.push_back(curr->val);
+            curr=curr->next->next;
+        }
+        //it may happen that we left with the last node 
+        //in case the length of the linked list is odd.
+        if(curr)
+        {
+            v.push_back(curr->val);
+        }
+
+        //step-2:take out the even part
+        curr=head->next;
+        while(curr->next && curr->next->next)
+        {
+            v.push_back(curr->val);
+            curr=curr->next->next;           
+        }
+        if(curr)
+        {
+            v.push_back(curr->val);
+        }
+
+        //now array contains the segregated list(odd then even)
+        int i=0;
+        curr=head;
+        while(curr != NULL)
+        {
+            curr->val=v.at(i);
+            curr=curr->next;
+            i++;
+        }
+        return head;
+
+        
+
+    }
+};
