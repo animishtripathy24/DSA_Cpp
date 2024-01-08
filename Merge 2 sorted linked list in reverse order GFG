@@ -1,0 +1,69 @@
+The structure of linked list is the following
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+*/
+#include<algorithm>
+class Solution
+{
+    public:
+    
+    Node* reverse(Node* head)
+    {
+        Node* curr=head;
+        Node* next=NULL;
+        Node* prev=NULL;
+        while(curr != NULL)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    
+    Node * mergeResult(Node *node1,Node *node2)
+    {
+        if(!node1 && !node2)
+        {
+            return NULL;
+        }
+        if(node1==NULL)
+        {
+            return reverse(node2);
+        }
+        if(node2==NULL)
+        {
+            return reverse(node1);
+        }
+        Node* list1=reverse(node1);
+        Node* list2=reverse(node2);
+        
+        //the pointer should point to the node which has the highest value
+        if(list2->data > list1->data)
+        {
+            swap(list1,list2);
+        }
+        Node* ans=list1;
+        while(list1 && list2)
+        {
+            Node* temp=NULL;
+            while((list1 != NULL) && (list1->data >= list2->data))
+            {
+                temp=list1;
+                list1=list1->next;
+            }
+            temp->next=list2;
+            swap(list1,list2);
+        }
+        return ans;
+        
+        
+        
+    }  
+};
