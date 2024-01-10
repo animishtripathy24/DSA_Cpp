@@ -1,0 +1,50 @@
+/* a Node of the doubly linked list 
+struct Node
+{
+  int data;
+  struct Node *next;
+  struct Node *prev;
+  Node(int x) { data = x; next = prev = NULL; }
+}; */
+
+class Solution {
+  public:
+    void deleteAllOccurOfX(struct Node** head_ref, int x) {
+        //edge cases
+        Node* &head=*head_ref;
+        Node* temp=head;
+        while(temp != NULL)
+        {
+            //first of all we have to check that temp ka data equals head
+            if(temp->data==x)
+            {
+                //agar first node huaa toh
+                if(head==temp)
+                {
+                    head=temp->next;
+                }
+                Node* nextNode=temp->next;
+                Node* prevNode=temp->prev;
+                //further checks will be required so as to avoid NULL pointer exception
+                if(nextNode)
+                {
+                    nextNode->prev=prevNode;
+                }
+                if(prevNode)
+                {
+                    prevNode->next=nextNode;
+                }
+                //node ko free bhi toh karna padega
+                Node* nodeToDelete=temp;
+                temp=temp->next;
+                delete nodeToDelete;
+            }
+            else
+            {
+                //data ke equal ni hai
+                //simply move the temp pointer by one steps
+                temp=temp->next;
+            }
+        }
+    }
+};
