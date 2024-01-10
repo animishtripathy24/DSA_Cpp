@@ -1,0 +1,52 @@
+/* Doubly linked list node class
+class Node
+{
+public:
+    int data;
+    Node *next, *prev;
+    Node(int val) : data(val), next(NULL), prev(NULL)
+    {
+    }
+};
+*/
+
+class Solution
+{
+private:
+    Node* getLastNode(Node* head)
+    {
+        Node* curr=head;
+        while(curr->next != NULL)
+        {
+            curr=curr->next;
+        }
+        return curr;
+    }
+public:
+    vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target)
+    {
+        vector<pair<int,int>>v;
+        //at first we have to find the last node of the linked list
+        Node* endNode=getLastNode(head);
+        Node* startNode=head;
+        
+        while(startNode->data < endNode->data)
+        {
+            if(((startNode->data)+(endNode->data))<target)
+            {
+                startNode=startNode->next;
+            }
+            else if(((startNode->data)+(endNode->data))>target)
+            {
+                endNode=endNode->prev;
+            }
+            else
+            {
+                v.push_back(make_pair(startNode->data,endNode->data));
+                startNode=startNode->next;
+                endNode=endNode->prev;
+            }
+        }
+        return v;
+    }
+};
