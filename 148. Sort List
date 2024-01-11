@@ -1,0 +1,75 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+private:
+    ListNode* findMiddle(ListNode* &head)
+    {
+        ListNode* fast=head;
+        ListNode* slow=head;
+        while(fast->next && fast->next->next)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        return slow;
+    }
+    ListNode* merge(ListNode* &list1,ListNode* &list2)
+    {
+        //edge cases
+        if(list1== NULL && list2==NULL)
+        {
+            return NULL;
+        }
+        if(list1==NULL)
+        {
+            return list2;
+        }
+        if(list2==NULL)
+        {
+            return list1;
+        }
+        //the list1 always point to the smaller element
+        if(list2->val < list1->val)
+        {
+            swap(list1,list2);
+        }
+        ListNode* ans=list1;
+        while(list1 != NULL && list2 != NULL)
+        {
+            ListNode* temp=NULL;
+            while(list1 != NULL && list1->val <= list2->val)
+            {
+                temp=list1;
+                list1=list1->next;
+            }
+            temp->next=list2;
+            swap(list1,list2);
+        }
+        return ans;
+    }
+public:
+    ListNode* sortList(ListNode* head) {
+        //edge cases
+        if(head==NULL || head->next==NULL)
+        {
+            return head;
+        }
+        //we have to find the rightmost middle element
+        ListNode* middle=findMiddle(head);
+        ListNode* leftHead=head;
+        ListNode* rightHead=middle->next;
+        //middle's next must point to NULL
+        middle->next=NULL;
+        ListNode* left=sortList(leftHead);
+        ListNode* right=sortList(rightHead);
+        return merge(left,right);
+    }
+};
