@@ -1,0 +1,80 @@
+/*
+struct Node 
+{
+    int data;
+    struct Node* next;
+    Node(int x) { data = x;  next = NULL; }
+};
+*/
+
+
+class Solution{
+private:
+    Node* findMiddle(Node* &head)
+    {
+        Node* fast=head;
+        Node* slow=head;
+        while(fast->next && fast->next->next)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        return slow;
+    }
+    Node* merge(Node* &list1,Node* &list2)
+    {
+        //edge cases
+        if(list1 == NULL && list2 == NULL)
+        {
+            return NULL;
+        }
+        if(list1== NULL)
+        {
+            return list2;
+        }
+        if(list2==NULL)
+        {
+            return list1;
+        }
+        //the list1 pointer always points to the smallest element
+        if(list2->data < list1->data)
+        {
+            swap(list1,list2);
+        }
+        Node* ans=list1;
+        while(list1 != NULL && list2 != NULL)
+        {
+            Node* temp=NULL;
+            while(list1 != NULL && list1->data <= list2->data)
+            {
+                temp=list1;
+                list1=list1->next;
+            }
+            temp->next=list2;
+            swap(list1,list2);
+        }
+        return ans;
+    }
+  public:
+    //Function to sort the given linked list using Merge Sort.
+    Node* mergeSort(Node* head) {
+       //edge cases
+       if(head == NULL || head->next==NULL)
+       {
+           return head;
+       }
+       //now we have to find the middle of the linked list
+       //in the case of the odd length linked list 
+       //it should be the first middle element
+       Node* middle=findMiddle(head);
+       Node* leftHead=head;
+       Node* rightHead=middle->next;
+       middle->next=NULL;
+       //recursive calls
+       Node* left=mergeSort(leftHead);
+       Node* right=mergeSort(rightHead);
+       //now we have to merge the linked list
+       return merge(left,right);
+       
+    }
+};
