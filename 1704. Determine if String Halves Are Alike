@@ -1,0 +1,32 @@
+class Solution {
+private:
+    bool isVowel(char ch) 
+    { 
+        ch = toupper(ch); 
+        return (ch=='A' || ch=='E' || ch=='I' || 
+                        ch=='O' || ch=='U'); 
+    } 
+  
+    int countVowels(string str) 
+    { 
+        int count=0; 
+        for (int i=0; i<str.length(); i++) 
+            if (isVowel(str[i]))
+                count++; 
+        return count; 
+    } 
+public:
+    bool halvesAreAlike(string s) {
+        //at first we will convert all the characters into lowercase
+        for(int i=0;i<s.size();i++)
+        {
+            s[i]=tolower(s[i]);
+        }
+        int k=s.size()/2;
+        string first(s.begin(),s.begin()+k);
+        string second(s.begin()+k,s.end());
+        int count1=countVowels(first);
+        int count2=countVowels(second);
+        return (count1 == count2);
+    }
+};
