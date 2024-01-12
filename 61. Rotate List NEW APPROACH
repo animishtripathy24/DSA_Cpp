@@ -1,0 +1,76 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+private:
+    int getLength(ListNode* head)
+    {
+        ListNode* curr=head;
+        int count=0;
+        while(curr)
+        {
+            count++;
+            curr=curr->next;
+        }
+        return count;
+    }
+    ListNode* reverse(ListNode* &head,int k)
+    {
+        int count=0;
+        ListNode* curr=head;
+        ListNode* next=NULL;
+        ListNode* prev=NULL;
+        while(curr != NULL && count < k)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+            count++;
+        }
+        return prev;
+    }
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        //edge cases
+        if(!head)
+        {
+            return head;
+        }
+        //at first we have to find the length of the linked list
+        int len=getLength(head);
+        //for value of k greater than the length of the linked list
+        k=k%len;
+        k=len-k;
+
+        //at first we have to reverse the first k nodes
+        int count=0;
+        ListNode* curr=head;
+        ListNode* next=NULL;
+        ListNode* prev=NULL;
+        while(curr != NULL && count < k)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+            count++;
+        }
+        if(next != NULL)
+        {
+            head->next=reverse(next,len-k);
+        }
+        //at last we have to reverse the complete linked list
+        ListNode* ans = reverse(prev,len);
+        return ans;
+
+        
+    }
+};
