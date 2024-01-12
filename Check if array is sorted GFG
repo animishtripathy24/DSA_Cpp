@@ -1,0 +1,16 @@
+class Solution {
+  public:
+    bool arraySortedOrNot(int arr[], int n) {
+        //we will traverse the first index and checks for the previous
+        //if at any place the previous element is greater than the current element
+        //then in that case we have to return false
+        for(int i=1;i<n;i++)
+        {
+            if(arr[i-1]> arr[i])
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+};
