@@ -1,0 +1,52 @@
+void insertSequence(string &str,int n)
+{
+    if(n==32)
+    {
+        str.push_back('0');
+        return;
+    }
+    while(n != 0)
+    {
+        str.push_back((char)(48+(n%10)));
+        n=n/10;
+    }
+}
+string printSequence(string S)
+{
+    unordered_map<char,int>m;
+    m.insert({'A',2});
+    m.insert({'B',22});
+    m.insert({'C',222});
+    m.insert({'D',3});
+    m.insert({'E',33});
+    m.insert({'F',333});
+    m.insert({'G',4});
+    m.insert({'H',44});
+    m.insert({'I',444});
+    m.insert({'J',5});
+    m.insert({'K',55});
+    m.insert({'L',555});
+    m.insert({'M',6});
+    m.insert({'N',66});
+    m.insert({'O',666});
+    m.insert({'P',7});
+    m.insert({'Q',77});
+    m.insert({'R',777});
+    m.insert({'S',7777});
+    m.insert({'T',8});
+    m.insert({'U',88});
+    m.insert({'V',888});
+    m.insert({'W',9});
+    m.insert({'X',99});
+    m.insert({'Y',999});
+    m.insert({'Z',9999});
+    m.insert({' ',32});
+    string str;
+    for(int i=0;i<S.size();i++)
+    {
+        auto it=m.find(S[i]);
+        // cout << it->second << endl;
+        insertSequence(str,it->second);
+    }
+    return str;
+}
