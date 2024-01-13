@@ -1,0 +1,52 @@
+class Solution{
+public:
+
+	void rearrange(int arr[], int num) {
+	    vector<int>p;
+	    vector<int>n;
+	    for(int i=0;i<num;i++)
+	    {
+	        if(arr[i]>=0)
+	        {
+	            p.push_back(arr[i]);
+	        }
+	        else
+	        {
+	            n.push_back(arr[i]);
+	        }
+	    }
+	    int i=0;
+	    int j=0;
+	    int turn=1;
+	    int id=0;
+	    while(i<p.size() && j<n.size())
+	    {
+	        if(turn)
+	        {
+	            arr[id]=p[i];
+	            id++;
+	            i++;
+	        }
+	        else
+	        {
+	            arr[id]=n[j];
+	            id++;
+	            j++;
+	        }
+	        turn=1-turn;
+	    }
+	    while(i<p.size())
+	    {
+	        arr[id]=p[i];
+	        id++;
+	        i++;
+	    }
+	    while(j<n.size())
+	    {
+	        arr[id]=n[j];
+	        id++;
+	        j++;
+	    }
+	    
+	}
+};
