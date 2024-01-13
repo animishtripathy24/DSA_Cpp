@@ -1,0 +1,24 @@
+class Solution
+{
+    public:
+    //Function to check if a string can be obtained by rotating
+    //another string by exactly 2 places.
+    bool isRotated(string str1, string str2)
+    {
+        if(str1.size()<2 || str2.size()<2)
+        {
+            return 0;
+        }
+        int size=str1.size();
+        int k=str1.size()-2;
+        string copy=str1;
+        reverse(str1.begin(),str1.begin()+2);
+        reverse(str1.begin()+2,str1.end());
+        reverse(str1.begin(),str1.end());
+        reverse(copy.begin(),copy.begin()+k);
+        reverse(copy.begin()+k,copy.end());
+        reverse(copy.begin(),copy.end());
+        return ((str1==str2) || (copy==str2));
+    }
+
+};
