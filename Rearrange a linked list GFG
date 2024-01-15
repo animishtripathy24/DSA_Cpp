@@ -1,0 +1,52 @@
+/*
+struct Node
+{
+    int data;
+    struct Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution
+{
+    private:
+        void insertAtTail(Node* &tail,Node* &curr)
+        {
+            tail->next=curr;
+            tail=tail->next;
+        }
+    public:
+    void rearrangeEvenOdd(Node *head)
+    {
+        Node* first = new Node(-1);
+        Node* temp1=first;
+        Node* second=new Node(-1);
+        Node* temp2=second;
+        Node* curr=head;
+        int count=1;
+        while(curr != NULL)
+        {
+            if(count &1)
+            {
+                insertAtTail(temp1,curr);
+            }
+            else
+            {
+                insertAtTail(temp2,curr);
+            }
+            curr=curr->next;
+            count++;
+        }
+        temp1->next=NULL;
+        temp2->next=NULL;
+        if(second->next)
+        {
+            temp1->next=second->next;
+        }
+        head=first->next;
+    }
+};
