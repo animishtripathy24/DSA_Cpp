@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int,int>m;
+        for(int i=0;i<arr.size();i++)
+        {
+            m[arr[i]]++;
+        }
+        unordered_set<int>s,s1;
+        for(auto &value:m)
+        {
+            s.insert(value.second);
+        }
+        for(int i=0;i<arr.size();i++)
+        {
+            s1.insert(arr[i]);
+        }
+        if(s1.size()==s.size())
+        {
+            return 1;
+        }
+        return 0;
+        
+    }
+};
