@@ -1,0 +1,37 @@
+/* A binary tree node has data, pointer to left child
+   and a pointer to right child /
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+}; */
+
+// function should print the nodes at k distance from root
+void solve(Node* root,int k,vector<int>&vect,int count)
+{
+    if(root==NULL)
+    {
+        count=count-1;
+        return;
+    }
+    if(count==k)
+    {
+        vect.push_back(root->data);
+    }
+    solve(root->left,k,vect,count+1);
+    solve(root->right,k,vect,count+1);
+    count=count-1;
+    return;
+    
+}
+vector<int> Kdistance(struct Node *root, int k)
+{
+  if(root==NULL)
+  {
+      return {};
+  }
+  vector<int>vect;
+  solve(root,k,vect,0);
+  return vect;
+}
