@@ -1,0 +1,52 @@
+/*Complete the function below
+
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+private:
+    void solve(Node* root,vector<int>&v)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        v.push_back(root->data);
+        solve(root->left,v);
+        solve(root->right,v);
+        return;
+    }
+  public:
+    // Return the Kth smallest element in the given BST
+    int KthSmallestElement(Node *root, int K) {
+        vector<int>v;
+        solve(root,v);
+        if(K>v.size())
+        {
+            return -1;
+        }
+        priority_queue<int>pq;
+        for(int i=0;i<K;i++)
+        {
+            pq.push(v[i]);
+        }
+        for(int i=K;i<v.size();i++)
+        {
+            if(v[i]<pq.top())
+            {
+                pq.pop();
+                pq.push(v[i]);
+            }
+        }
+        return pq.top();
+    }
+};
