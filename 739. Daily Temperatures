@@ -1,0 +1,40 @@
+class Solution {
+private:
+    vector<int> NGE(vector<int>&v)
+    {
+        vector<int>nge(v.size());
+        stack<int>s;
+        for(int i=0;i<v.size();i++)
+        {
+            while(!s.empty() && v[i]>v[s.top()])
+            {
+                nge[s.top()]=i;
+                s.pop(); 
+            }
+            s.push(i);
+        }
+        while(!s.empty())
+        {
+            nge[s.top()]=-1;
+            s.pop();
+        }
+        return nge;
+    }
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        vector<int>nge=NGE(temperatures);
+        vector<int>ans;
+        for(int i=0;i<nge.size();i++)
+        {
+            if(nge[i]==-1)
+            {
+                ans.push_back(0);
+            }
+            else
+            {
+                ans.push_back(nge[i]-i);
+            }
+        }
+        return ans;
+    }
+};
