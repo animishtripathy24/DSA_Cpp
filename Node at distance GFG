@@ -1,0 +1,97 @@
+//Node Structure
+/*struct Node
+{
+	int k;
+	Node *left, *right;
+};*/
+class Solution
+{
+    public:
+        int solve(struct Node* node)
+        {
+            if(!node)
+            {
+                return 0;
+            }
+            int lh=solve(node->left);
+            int rh=solve(node->right);
+            return 1+max(lh,rh);
+            
+        }
+        int check(Node* root,int k)
+        {
+            int c=0;
+            queue<Node*>q;
+            q.push(root);
+            int curr_level=0;
+            while(!q.empty())
+            {
+                if(curr_level==k)
+                {
+                    break;
+                }
+                int size=q.size();
+                for(int i=0;i<size;i++)
+                {
+                    Node* curr=q.front();
+                    q.pop();
+                    if(curr->left)
+                    {
+                        q.push(curr->left);
+                    }
+                    if(curr->right)
+                    {
+                        q.push(curr->right);
+                    }
+                }
+                curr_level++;
+            }
+            while(!q.empty())
+            {
+                Node* curr=q.front();
+                q.pop();
+                if(!curr->left && !curr->right)
+                {
+                    c++;
+                }
+            }
+            if(c>=1)
+            {
+                return 1;
+            }
+            return 0;
+        }
+    //Function to return count of nodes at a given distance from leaf nodes.
+    int printKDistantfromLeaf(Node* root, int k)
+    {
+        int height=solve(root);
+        int count=0;
+    	queue<Node*>q;
+    	q.push(root);
+    	int curr_level=0;
+    	while(!q.empty())
+    	{
+    	    if(height-curr_level <= k)
+    	    {
+    	        break;
+    	    }
+    	    int size=q.size();
+    	    for(int i=0;i<size;i++)
+    	    {
+    	        Node* curr=q.front();
+    	        q.pop();
+    	        count+=check(curr,k);
+    	        if(curr->left)
+    	        {
+    	            q.push(curr->left);
+    	        }
+    	        if(curr->right)
+    	        {
+    	            q.push(curr->right);
+    	        }
+    	    }
+    	    curr_level++;
+    	}
+    	return count;
+    }
+};
