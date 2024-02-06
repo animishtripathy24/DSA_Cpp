@@ -1,0 +1,70 @@
+/* structure for a node */
+/*
+struct Node
+{
+  int data;
+  struct Node *next;
+  
+  Node(int x){
+      data = x;
+      next = NULL;
+  }
+  
+};
+ */
+ 
+// This function should return head of
+// the modified list
+class Solution
+{
+    public:
+    Node* solve(Node* head)
+    {
+        Node* curr=head;
+        while(curr->next != head)
+        {
+            curr=curr->next;
+        }
+        return curr;
+    }
+    Node *sortedInsert(Node* head, int data)
+    {
+        if(head==NULL)
+        {
+            Node* temp=new Node(data);
+            temp->next=temp;
+            return temp;
+        }
+       Node* curr=head;
+       //if we have to insert at the beginning
+       if(head->data >= data)
+       {
+           //at first we have to find the last Node
+           Node* lastNode=solve(head);
+           Node* newNode=new Node(data);
+           newNode->next=head;
+           lastNode->next=newNode;
+           return newNode;
+       }
+        else
+        {
+            Node* prev=NULL;
+            while(curr->data < data && curr->next != head)
+           {
+               prev=curr;
+               curr=curr->next;
+           }
+           if(curr->next==head && data > curr->data)
+           {
+                Node* newNode=new Node(data);
+               newNode->next=curr->next;
+               curr->next=newNode;
+               return head;
+           }
+           Node* newNode=new Node(data);
+           newNode->next=prev->next;
+           prev->next=newNode;
+           return head;
+        }
+    }
+};
