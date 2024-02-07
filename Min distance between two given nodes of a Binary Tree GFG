@@ -1,0 +1,91 @@
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+class Solution{
+    private:
+    void makeParent(Node* root,unordered_map<Node*,Node*>&parent)
+    {
+        queue<Node*>q;
+        q.push(root);
+        while(!q.empty())
+        {
+            Node* curr=q.front();
+            q.pop();
+            if(curr->left)
+            {
+                parent[curr->left]=curr;
+                q.push(curr->left);
+            }
+            if(curr->right)
+            {
+                parent[curr->right]=curr;
+                q.push(curr->right);
+            }
+        }
+    }
+    void findTarget(Node* root,Node* &target,int a)
+    {
+        if(root == NULL)
+        {
+            return;
+        }
+        findTarget(root->left,target,a);
+        if(root->data == a)
+        {
+            target=root;
+            return;
+        }
+        findTarget(root->right,target,a);
+    }
+    public:
+    /* Should return minimum distance between a and b
+    in a tree with given root*/
+    int findDist(Node* root, int a, int b) {
+        //at first we have to make the parent node
+        unordered_map<Node*,Node*>parent;
+        makeParent(root,parent);
+        //lets find the target node
+        Node* target=NULL;
+        findTarget(root,target,a);
+        //then we hsve to make a visited map
+        unordered_map<int,bool>vis;
+        queue<Node*>q;
+        q.push(target);
+        vis[target->data]=true;
+        int c=0;
+        while(!q.empty())
+        {
+            int size=q.size();
+            for(int i=0;i<size;i++)
+            {
+                Node* curr=q.front();
+                q.pop();
+                if(curr->left && !vis[curr->left->data])
+                {
+                    q.push(curr->left);
+                    vis[curr->left->data]=true;
+                }
+                if(curr->right && !vis[curr->right->data])
+                {
+                    q.push(curr->right);
+                    vis[curr->right->data]=true;
+                }
+                if(parent[curr] && !vis[parent[curr]->data])
+                {
+                    q.push(parent[curr]);
+                    vis[parent[curr]->data]=true;
+                }
+            }
+            c++;
+            if(a!=b && vis[b]==true)
+            {
+                return c;
+            }
+        }
+        return 0;
+    }
+};
