@@ -1,0 +1,66 @@
+/* The structure of the binary tree is as follows
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+};
+*/
+
+class Solution{
+private:
+    void solve(Node* root,vector<int>&leaf)
+    {
+        if(root == NULL)
+        {
+            return ;
+        }
+        solve(root->left,leaf);
+        if(!root->left && !root->right)
+        {
+            leaf.push_back(root->data);
+        }
+        solve(root->right,leaf);
+    }
+  public:
+    /*You are required to complete this method*/
+    bool check(Node *root)
+    {
+        //find all the root nodes
+        vector<int>leaf;
+        solve(root,leaf);
+        vector<vector<int>>v;
+        queue<Node*>q;
+        q.push(root);
+        while(!q.empty())
+        {
+            int size=q.size();
+            vector<int>temp;
+            for(int i=0;i<size;i++)
+            {
+                Node* curr=q.front();
+                q.pop();
+                temp.push_back(curr->data);
+                if(curr->left)
+                {
+                    q.push(curr->left);
+                }
+                if(curr->right)
+                {
+                    q.push(curr->right);
+                }
+            }
+            v.push_back(temp);
+        }
+        int s=v.size();
+        for(auto &value:leaf)
+        {
+            auto it=find(v[s-1].begin(),v[s-1].end(),value);
+            if(it == v[s-1].end())
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+};
