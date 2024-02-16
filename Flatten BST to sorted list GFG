@@ -1,0 +1,49 @@
+/* Node of the binary search tree 
+class Node
+{
+public:
+    int data;
+    Node *left;
+    Node *right;
+    Node(int val)
+    {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution
+{
+private:
+    void findInorder(Node* root,vector<Node*>&v)
+    {
+        if(!root)
+        {
+            return;
+        }
+        findInorder(root->left,v);
+        v.push_back(root);
+        findInorder(root->right,v);
+        return;
+    }
+public:
+    Node *flattenBST(Node *root)
+    {
+        vector<Node*>v;
+        findInorder(root,v);
+        Node* newNode=v[0];
+        Node* curr=NULL;
+        for(int i=0;i<v.size()-1;i++)
+        {
+            curr=v[i];
+            curr->left=NULL;
+            curr->right=v[i+1];
+        }
+        v[v.size()-1]->left=NULL;
+        v[v.size()-1]->right=NULL;
+        return newNode;
+        
+    }
+};
