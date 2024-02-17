@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int findMidSum(int ar1[], int ar2[], int n) {
+            int i=0;
+            int j=0;
+            vector<int>arr;
+            while(i<n && j<n)
+            {
+                if(ar1[i]<=ar2[j])
+                {
+                    arr.push_back(ar1[i]);
+                    i++;
+                }
+                else
+                {
+                    arr.push_back(ar2[j]);
+                    j++;
+                }
+            }
+            while(i<n)
+            {
+                arr.push_back(ar1[i]);
+                i++;
+            }
+            while(j<n)
+            {
+                arr.push_back(ar2[j]);
+                j++;
+            }
+            int middle=arr.size()/2;
+            return arr[middle]+arr[middle-1];
+    }
+};
