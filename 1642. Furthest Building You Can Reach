@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        //at first we have to declare a min heap
+        priority_queue<int,vector<int>,greater<int>>pq;
+        int res=0;
+        int bricksCount=0;
+        for(int i=1;i<heights.size();i++)
+        {
+            int gap=heights[i]-heights[i-1];
+            if(gap < 0)
+            {
+                //successful move
+                res++;
+            }
+            else
+            {
+                pq.push(gap);
+
+                if(pq.size()>ladders)
+                {
+                    bricksCount+=pq.top();
+                    pq.pop();
+                }
+
+                if((bricksCount > bricks) && (pq.size()==ladders))
+                {
+                    break;
+                }
+
+                res++;
+
+            }
+        }
+        return res;
+    }
+};
