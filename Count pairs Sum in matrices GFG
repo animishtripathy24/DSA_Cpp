@@ -1,0 +1,34 @@
+//User function template for C++
+class Solution{
+public:	
+	
+	int countPairs(vector<vector<int>> &mat1, vector<vector<int>> &mat2, int n, int x)
+	{
+	    unordered_map<int,int>m;
+	    for(int i=0;i<n;i++)
+	    {
+	        for(int j=0;j<n;j++)
+	        {
+	            m[mat1[i][j]]++;
+	        }
+	    }
+	    int count=0;
+	    for(int i=0;i<n;i++)
+	    {
+	        for(int j=0;j<n;j++)
+	        {
+	            auto it=m.find(x-mat2[i][j]);
+	            if(it!=m.end())
+	            {
+	                count++;
+	                it->second--;
+	            }
+	            else
+	            {
+	                continue;
+	            }
+	        }
+	    }
+	    return count;
+	}
+};
