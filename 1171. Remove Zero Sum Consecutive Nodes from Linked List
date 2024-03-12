@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        if(!head || (!head->next && head->val==1))
+        {
+            return head;
+        }
+        if(!head->next && head->val==0)
+        {
+            return NULL;
+        }
+        unordered_map<int,ListNode*>m;
+        //at first we have to make a dummy node
+        ListNode* dummy=new ListNode(0);
+        dummy->next=head;
+        m[0]=dummy;
+        int prefixSum=0;
+        while(head != NULL)
+        {
+            prefixSum+=head->val;
+            if(m.find(prefixSum) != m.end())
+            {
+                ListNode* start=m[prefixSum];
+                ListNode* pt=start;
+                ListNode* temp=head;
+                int prev=prefixSum;
+                while(pt != temp)
+                {
+                    pt=pt->next;
+                    prev+=pt->val;
+                    if(pt != temp)
+                    {
+                        m.erase(prev);
+                    }
+                }
+                start->next=temp->next;
+                
+            }
+            else
+            {
+                m[prefixSum]=head;
+            }
+            head=head->next;
+        }
+        return dummy->next;
+    }
+};
