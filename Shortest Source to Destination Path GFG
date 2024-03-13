@@ -1,0 +1,50 @@
+class Solution {
+  public:
+    int shortestDistance(int N, int M, vector<vector<int>> A, int X, int Y) {
+        if(A[0][0]==0)
+        {
+            return -1;
+        }
+        //at first we have to declare distance array
+        vector<vector<int>>dist(N,vector<int>(M,1e9));
+        //mark the distance of the source node as 0;
+        dist[0][0]=0;
+        queue<pair<int,pair<int,int>>>q; // {distance,{row,col}}
+        q.push({0,{0,0}});
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            int distance=it.first;
+            int row=it.second.first;
+            int col=it.second.second;
+            for(int delrow=-1;delrow<=1;delrow++)
+            {
+                for(int delcol=-1;delcol<=1;delcol++)
+                {
+                    //ignore the diagonals moves
+                    if(abs(delrow)+abs(delcol)==2)
+                    {
+                        continue;
+                    }
+                    int nrow=row+delrow;
+                    int ncol=col+delcol;
+                    if(nrow >=0 && nrow < N && ncol>=0 && ncol<M && A[nrow][ncol]==1 && distance+1 < dist[nrow][ncol])
+                    {
+                        dist[nrow][ncol]=distance+1;
+                        if(nrow == X && ncol == Y)
+                        {
+                            return distance+1;
+                        }
+                        q.push({dist[nrow][ncol],{nrow,ncol}});
+                    }
+                }
+            }
+        }
+        if(X==0 && Y==0)
+        {
+            return 0;
+        }
+        return -1;
+    }
+};
