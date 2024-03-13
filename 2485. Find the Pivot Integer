@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int pivotInteger(int n) {
+        if(n==1) return 1;
+        int low =1;
+        int high=n;
+        while(low < high)
+        {
+            int mid = low +((high-low)>>1);
+            int sum_left=0;
+            int sum_right=0;
+            for(int i=1 ; i<mid;i++)
+            {
+                sum_left+=i;
+            }
+            for(int i=mid+1;i<=n;i++)
+            {
+                sum_right+=i;
+            }
+            if(sum_left==sum_right)
+            {
+                return mid;
+            }
+            else if(sum_left < sum_right)
+            {
+                low=mid+1;
+            }
+            else
+            {
+                high=mid-1;
+            }
+        }
+        return -1;
+    }
+};
