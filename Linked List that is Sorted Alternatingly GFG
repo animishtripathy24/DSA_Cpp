@@ -1,0 +1,36 @@
+/*
+struct Node
+{
+	int data;
+	struct Node *next;
+	
+	Node(int x){
+	    data =x;
+	    next = NULL;
+	}
+};
+*/
+
+class Solution
+{
+    public:
+    // your task is to complete this function
+    void sort(Node **head)
+    {
+        priority_queue<int,vector<int>,greater<int>>pq;
+        Node* curr=*head;
+        while(curr != NULL)
+        {
+            pq.push(curr->data);
+            curr=curr->next;
+        }
+        curr=*head;
+        while(!pq.empty() && curr != NULL)
+        {
+            int top=pq.top();
+            pq.pop();
+            curr->data=top;
+            curr=curr->next;
+        }
+    }
+};
