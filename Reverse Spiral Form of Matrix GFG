@@ -1,0 +1,47 @@
+class Solution {
+  public:
+    vector<int> reverseSpiral(int R, int C, vector<vector<int>>&a)  {
+        vector<int>ans;
+        int count=0;
+        int total=R*C;
+        
+        int top=0;
+        int left=0;
+        int right=C-1;
+        int bottom=R-1;
+        
+        while(count < total)
+        {
+            //first row
+            for(int i=left;i<=right && count < total;i++)
+            {
+                ans.push_back(a[top][i]);
+                count++;
+            }
+            top++;
+            //last column
+            for(int i=top;i<=bottom && count < total;i++)
+            {
+                ans.push_back(a[i][right]);
+                count++;
+            }
+            right--;
+            //last row
+            for(int i=right;i>=left && count < total;i--)
+            {
+                ans.push_back(a[bottom][i]);
+                count++;
+            }
+            bottom--;
+            //first column
+            for(int i=bottom;i>=top && count < total;i--)
+            {
+                ans.push_back(a[i][left]);
+                count++;
+            }
+            left++;
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
