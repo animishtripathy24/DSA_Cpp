@@ -1,0 +1,15 @@
+/*Complete the functions below*/
+int find(int A[],int X)
+{
+       if(X==A[X])
+       {
+           return X;
+       }
+       return A[X]=find(A,A[X]);
+}
+void unionSet(int A[],int X,int Z)
+{
+	X=find(A,X);
+	Z=find(A,Z);
+    A[X]=Z;
+}
