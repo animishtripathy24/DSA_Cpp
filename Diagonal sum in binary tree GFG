@@ -1,0 +1,40 @@
+/*Complete the function below
+Node is as follows:
+struct Node{
+    int data;
+    Node *left,*right;
+};
+*/
+
+
+class Solution
+{
+    public:
+    vector <int> diagonalSum(Node* root) {
+        map<int,int>m;
+        queue<pair<int,Node*>>q;
+        q.push({0,root});
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            Node* curr=it.second;
+            int index=it.first;
+            m[index]+=curr->data;
+            if(curr->right)
+            {
+                q.push({index,curr->right});
+            }
+            if(curr->left)
+            {
+                q.push({index+1,curr->left});
+            }
+        }
+        vector<int>ans;
+        for(auto &it:m)
+        {
+            ans.push_back(it.second);
+        }
+        return ans;
+    }
+};
