@@ -1,0 +1,31 @@
+class Solution{
+private:
+    void solve(int n,int one,int zero,vector<string>&ans,string &ds)
+    {
+        if(one+zero==n)
+        {
+            ans.push_back(ds);
+            return;
+        }
+        if(one<n)
+        {
+            ds.push_back('1');
+            solve(n,one+1,zero,ans,ds);
+            ds.pop_back();
+        }
+        if(zero<one)
+        {
+            ds.push_back('0');
+            solve(n,one,zero+1,ans,ds);
+            ds.pop_back();
+        }
+    }
+public:	
+	vector<string> NBitBinary(int n)
+	{
+	   vector<string>ans;
+	   string ds;
+	   solve(n,0,0,ans,ds);
+	   return ans;
+	}
+};
