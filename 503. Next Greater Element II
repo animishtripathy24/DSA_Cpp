@@ -1,0 +1,33 @@
+class Solution {
+private:
+    vector<int> NGE(vector<int>&v)
+    {
+        int n=v.size();
+        vector<int>nge(v.size());
+        stack<int>s;
+        for(int i=0;i<2*n-1;i++)
+        {
+            while(!s.empty() && v[i%n]>v[s.top()])
+            {
+                nge[s.top()]=v[i%n];
+                s.pop(); 
+            }
+            if(i<n)
+            {
+                s.push(i);
+            }
+        }
+        while(!s.empty())
+        {
+            nge[s.top()]=-1;
+            s.pop();
+        }
+        return nge;
+    }
+
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        vector<int>nge=NGE(nums);
+        return nge;
+    }
+};
