@@ -1,0 +1,37 @@
+class Solution {
+private:
+    double power(double x,int n)
+    {
+        //base case
+        if(n==0)
+        {
+            return 1;
+        }
+        if(n==1)
+        {
+            return x;
+        }
+
+        double ans=power(x,n/2);
+
+        //if b is odd
+        if(n & 1)
+        {
+            return (double)x*ans*ans;
+        }
+        else
+        {
+            return (double)ans*ans;
+        }
+    }
+public:
+    double myPow(double x, int n) {
+        double ans=power(x,n);
+        if(n>0)
+        {
+            return ans;
+        }
+        return (double)(1/ans);
+
+    }
+};
