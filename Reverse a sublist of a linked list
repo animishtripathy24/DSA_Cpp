@@ -1,0 +1,53 @@
+
+/*Link list node 
+struct Node {
+	int data;
+	struct Node *next;
+	Node(int x) {
+		data = x;
+		next = NULL;
+	}
+};*/
+
+class Solution
+{
+    private:
+    Node* reverse(Node* &head,int right)
+    {
+        Node* curr=head;
+        Node* prev=NULL;
+        Node* next=NULL;
+        int count=0;
+        while(curr !=NULL && count < right)
+        {
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+            count++;
+        }
+        head->next=next;
+        return prev;
+    }
+    public:
+    Node* reverseBetween(Node* head, int m, int n)
+    {
+        //at first we have to create a dummy node
+        Node* dummy=new Node(-1);
+        //we have to attach the dummy node with the head
+        dummy->next=head;
+        Node* curr=dummy;
+        //now we have to move curr till (m - 1) steps
+        for(int i=1;i<m;i++)
+        {
+            curr=curr->next;
+        }
+        //humko (m-n+1) nodes ko reverse karna hai 
+        Node* newHead=reverse(curr->next,(n-m+1));
+        
+        curr->next=newHead;
+        
+        return dummy->next;
+        
+    }
+};
