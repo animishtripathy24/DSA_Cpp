@@ -1,0 +1,38 @@
+class Solution
+{
+    private:
+    int bfs(int node,vector<int>adj[],int vis[],int X)
+    {
+        int level=0;
+        //at first we have to mark in the visited array
+        queue<int>q;
+        q.push(node);
+        while (!q.empty()) {
+            int sz = q.size(); // Get the number of nodes at current level
+            for (int i = 0; i < sz; i++) {
+                int cur = q.front();
+                q.pop();
+                vis[cur] = 1;
+                for (auto &it : adj[cur]) {
+                    if (it == X) {
+                        return level + 1; // Return the level of X
+                    }
+                    if (!vis[it]) {
+                        q.push(it);
+                    }
+                }
+            }
+            level++; 
+        }
+        return -1;
+    }
+	public:
+	//Function to find the level of node X.
+	int nodeLevel(int V, vector<int> adj[], int X) 
+	{
+	    //at first we have to declare visited array
+	    int vis[V]={0};
+	    int level=bfs(0,adj,vis,X);
+	    return level;
+	}
+};
