@@ -1,0 +1,41 @@
+/* Linked List node structure
+    
+struct Node {
+	int data;
+	struct Node *next;
+};
+
+*/
+
+class Solution
+{
+    public:
+    Node* removeAllDuplicates(struct Node* head)
+    {
+        unordered_map<int,int>m;
+        struct Node* curr=head;
+        while(curr != NULL)
+        {
+            m[curr->data]++;
+            curr=curr->next;
+        }
+        vector<int>ans;
+        for(auto &it:m)
+        {
+            if(it.second == 1)
+            {
+                ans.push_back(it.first);
+            }
+        }
+        Node* dummy=new Node(-1);
+        Node* temp=dummy;
+        sort(ans.begin(),ans.end());
+        for(auto &it:ans)
+        {
+            Node* newNode=new Node(it);
+            temp->next=newNode;
+            temp=temp->next;
+        }
+        return dummy->next;
+    }
+};
