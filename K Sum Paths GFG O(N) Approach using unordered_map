@@ -1,0 +1,47 @@
+/*
+struct Node 
+{
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution{
+    void solve(Node* root,unordered_map<long long,int>&m,int k,int &count,int &sum)
+    {
+        //base case
+        if(!root)
+        {
+            return;
+        }
+        
+        sum+=root->data;
+        
+        count+=m[sum-k];
+        
+        m[sum]++;
+        
+        //recursive calls
+        solve(root->left,m,k,count,sum);
+        solve(root->right,m,k,count,sum);
+        
+        //remove the element that was last added from the vector
+        m[sum]--;
+        sum-=root->data;
+    }
+  public:
+    int sumK(Node *root,int k)
+    {
+        unordered_map<long long,int>m;
+        m[0]=1;
+        int count=0;
+        int sum=0;
+        solve(root,m,k,count,sum);
+        return count;
+    }
+};
