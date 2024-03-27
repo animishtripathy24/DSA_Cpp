@@ -1,0 +1,36 @@
+/*  Tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+/*You are required to complete below method */
+void findPath(Node* root,vector<int>&ds,unordered_map<int,int>&m)
+{
+    if(!root)
+    {
+        return;
+    }
+    ds.push_back(root->data);
+    if(!root->left && !root->right)
+    {
+        m[ds.size()]++;
+        ds.pop_back();
+        return;
+    }
+    findPath(root->left,ds,m);
+    findPath(root->right,ds,m);
+    ds.pop_back();
+    return;
+}
+void pathCounts(Node *root)
+{
+    vector<int>ds;
+    unordered_map<int,int>m;
+    findPath(root,ds,m);
+    for(auto &it:m)
+    {
+        cout << it.first << " " << it.second << " " << "$";
+    }
+}
