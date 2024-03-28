@@ -1,0 +1,35 @@
+class Solution{
+private:
+    int countNodes(Node* root)
+    {
+        if(!root)
+        {
+            return 0;
+        }
+        int lh=countNodes(root->left);
+        int rh=countNodes(root->right);
+        
+        return 1+lh+rh;
+    }
+    bool isCBT(Node* root,int index,int nodeCount)
+    {
+        if(!root)
+        {
+            return 1;
+        }
+        if(index >= nodeCount)
+        {
+            return 0;
+        }
+        return isCBT(root->left,2*index+1,nodeCount) && isCBT(root->right,2*index+2,nodeCount);
+    }
+public:    
+    bool isCompleteBT(Node* root){
+        if(root == NULL)
+        {
+            return 1;
+        }
+        int nodeCount=countNodes(root);
+        return isCBT(root,0,nodeCount);
+    }
+};
