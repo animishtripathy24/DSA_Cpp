@@ -1,0 +1,59 @@
+class Solution
+{
+    private:
+    vector<long long> NSE(long long arr[],int n)
+    {
+        stack<long long>s;
+        vector<long long>nge(n,-1);
+        for(int i=0;i<n;i++)
+        {
+            while(!s.empty() && arr[i] < arr[s.top()])
+            {
+                nge[s.top()]=i;
+                s.pop();
+            }
+            s.push(i);
+        }
+        return nge;
+    }
+    vector<long long> PSE(long long arr[],int n)
+    {
+        stack<long long>s;
+        vector<long long>nge(n,-1);
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!s.empty() && arr[i] < arr[s.top()])
+            {
+                nge[s.top()]=i;
+                s.pop();
+            }
+            s.push(i);
+        }
+        return nge;
+    }
+    public:
+    //Function to find largest rectangular area possible in a given histogram.
+    long long getMaxArea(long long arr[], int n)
+    {
+        vector<long long>nse=NSE(arr,n);
+        vector<long long>pse=PSE(arr,n);
+
+        for(int i=0;i<nse.size();i++)
+        {
+            if(nse[i] == -1)
+            {
+                nse[i]=n;
+            }
+        }
+        long long maxiArea=LLONG_MIN;
+        for(int i=0;i<n;i++)
+        {
+            long long length=arr[i];
+            long long breadth=nse[i]-pse[i]-1;
+            long long newArea=length*breadth;
+            // cout << newArea << " ";
+            maxiArea=max(maxiArea,newArea);
+        }
+        return maxiArea;
+    }
+};
