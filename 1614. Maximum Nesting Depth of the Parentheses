@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxDepth(string s) {
+        int count =0;
+        int maxi=INT_MIN;
+        stack<char>st;
+        //jab jab opening braces milte rahenge ....
+        //tab tak stack me push karte rahna hai...
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='(')
+            {
+                st.push('(');
+            }
+            else if(s[i]==')')
+            {
+                count=st.size();
+                st.pop();
+            }
+            maxi=max(maxi,count);
+        }
+        return maxi;
+    }
+};
