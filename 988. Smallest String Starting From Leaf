@@ -1,0 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    void solve(TreeNode* root,string &ds,vector<string>&ans)
+    {
+        if(root == NULL)
+        {
+            return;
+        }
+        ds.push_back((root->val+'a'));
+        if(root->left == NULL && root->right == NULL)
+        {
+            reverse(ds.begin(),ds.end());
+            // cout << ds << " ";
+            ans.push_back(ds);
+            reverse(ds.begin(),ds.end());
+            ds.pop_back();
+            return;
+        }
+        solve(root->left,ds,ans);
+        solve(root->right,ds,ans);
+        ds.pop_back();
+        return;
+    }
+public:
+    string smallestFromLeaf(TreeNode* root) {
+        vector<string>ans;
+        string ds;
+        solve(root,ds,ans);
+        sort(ans.begin(),ans.end());
+        return ans[0];
+    }
+};
