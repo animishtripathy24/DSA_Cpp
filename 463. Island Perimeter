@@ -1,0 +1,73 @@
+class Solution {
+private:
+    void bfs(int row,int col,vector<vector<int>>& grid,vector<vector<bool>>&vis,int &perimeter)
+    {
+        int n=grid.size();
+        int m=grid[0].size();
+
+        vis[row][col]=true;
+
+        queue<pair<int,int>>q;
+        q.push({row,col});
+
+        while(!q.empty())
+        {
+            auto front=q.front();
+            q.pop();
+            int row=front.first;
+            int col=front.second;
+
+            for(int delrow=-1;delrow<=1;delrow++)
+            {
+                for(int delcol=-1;delcol<=1;delcol++)
+                {
+                    if(abs(delrow)+abs(delcol)==2)
+                    {
+                        continue;
+                    }
+                    int nrow=row+delrow;
+                    int ncol=col+delcol;
+                    if(nrow>=0 && nrow<n && ncol>=0 && ncol<m)
+                    {
+                        if(grid[nrow][ncol]==1 && !vis[nrow][ncol])
+                        {
+                            vis[nrow][ncol]=true;
+                            q.push({nrow,ncol});
+                        }
+                        else if(grid[nrow][ncol]==0)
+                        {
+                            perimeter++;
+                        }
+                    }
+                    else
+                    {
+                        perimeter++;
+                    }
+                }
+            }
+        }
+    }
+public:
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+
+        //now we have to make visted array
+        vector<vector<bool>>vis(n,vector<bool>(m,false));
+
+        //now we have to start the bfs call
+        int perimeter=0;
+        bool check=false;
+        for (int i = 0; i < n; i++) 
+        {
+            for (int j = 0; j < m; j++) 
+            {
+                if (grid[i][j] == 1 && !vis[i][j])
+                {
+                    bfs(i, j, grid, vis, perimeter);
+                }
+            }
+        }
+        return perimeter;
+    }
+};
