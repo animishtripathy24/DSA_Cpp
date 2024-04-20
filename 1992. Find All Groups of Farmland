@@ -1,0 +1,66 @@
+class Solution {
+private:
+    private:
+    pair<int,int> bfs(int row,int col,vector<vector<int>>&grid,vector<vector<bool>>&vis)
+    {
+        int n=grid.size();
+        int m=grid[0].size();
+        //at first mark the rows and columns in the visited matrix
+        vis[row][col]=true;
+        queue<pair<int,int>>q;
+        q.push({row,col});
+        int lrow=-1,lcol=-1;
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            int row=it.first;
+            int col=it.second;
+            lrow=row;
+            lcol=col;
+            for(int delrow=-1;delrow<=1;delrow++)
+            {
+                for(int delcol=-1;delcol<=1;delcol++)
+                {   
+                    //ignore the diagonal ones
+                    if(abs(delrow)+abs(delcol)==2)
+                    {
+                        continue;
+                    }
+                    int newrow=row+delrow;
+                    int newcol=col+delcol;
+                    if(newrow >=0 && newrow <n && newcol>=0 && newcol<m && !vis[newrow][newcol] && grid[newrow][newcol]==1)
+                    {
+                        vis[newrow][newcol]=true;
+                        q.push({newrow,newcol});
+                    }
+                }   
+            }
+        }
+        return {lrow,lcol};
+    }
+public:
+    vector<vector<int>> findFarmland(vector<vector<int>>& land) {
+        int n=land.size();
+        int m=land[0].size();
+        vector<vector<int>>ans;
+        vector<vector<bool>>vis(n,vector<bool>(m,false));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(!vis[i][j] && land[i][j]==1)
+                {
+                    vector<int>temp;
+                    temp.push_back(i);
+                    temp.push_back(j);
+                    pair<int,int>p=bfs(i,j,land,vis);
+                    temp.push_back(p.first);
+                    temp.push_back(p.second);
+                    ans.push_back(temp);
+                }
+            }
+        }
+        return ans;
+    }
+};
