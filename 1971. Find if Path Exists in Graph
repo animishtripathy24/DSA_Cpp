@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        //at first we have to make adjacency matrix
+        vector<int>adj[n];
+        for(auto &it:edges)
+        {
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
+        }
+        //now we have to declare a visited array
+        vector<int>vis(n,0);
+        queue<int>q;
+        q.push(source);
+        
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            vis[node]=1;
+            if(node==destination)
+            {
+                return 1;
+            }
+            //visit all the adjacent nodes
+            for(auto &it:adj[node])
+            {
+                if(!vis[it])
+                {
+                    q.push(it);
+                }
+            }
+        }
+        return 0;
+    }
+};
