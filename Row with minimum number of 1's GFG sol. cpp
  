@@ -1,0 +1,38 @@
+// User function Template for C++
+
+class Solution {
+  public:
+  map<int,int>m;
+    void count(vector<int>&v,int row)
+    {
+        int count_zero=0;
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i]==0)
+            {
+                count_zero++;
+            }
+        }
+        m.insert(make_pair(row,count_zero));
+        return;
+    }
+    int minRow(int N, int M, vector<vector<int>> A) {
+         for(int i=0;i<N;i++)
+            {
+                count(A[i],i+1);
+            }
+            int maxi=INT_MIN;
+            for(auto &value:m)
+            {
+                maxi=max(maxi,value.second);
+            }
+            for(auto &value:m)
+            {
+                if(maxi==value.second)
+                {
+                    return value.first;
+                }
+            }
+            return -1;
+    }
+};
