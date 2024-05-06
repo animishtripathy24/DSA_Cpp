@@ -1,0 +1,63 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+private:
+    void insertAtTail(ListNode* &tail,ListNode* curr)
+    {
+        tail->next=curr;
+        tail=tail->next;
+    }
+    int getLength(ListNode* head)
+    {
+        int count=0;
+        ListNode* curr=head;
+        while(curr != NULL)
+        {
+            count++;
+            curr=curr->next;
+        }
+        return count;
+    }
+    deque<int> NGE(ListNode* head,int len)
+    {
+        deque<int>nge;
+        stack<ListNode*>s;
+        ListNode* curr=head;
+        while(curr != NULL)
+        {
+            while(!s.empty() && curr->val > s.top()->val)
+            {
+                s.pop();
+            }
+            s.push(curr);
+            curr=curr->next;
+        }
+        while(!s.empty())
+        {
+            nge.push_front(s.top()->val);
+            s.pop();
+        }
+        return nge;
+    }
+public:
+    ListNode* removeNodes(ListNode* head) {
+        int len=getLength(head);
+        deque<int>nge=NGE(head,len);
+        ListNode* dummy=new ListNode();
+        ListNode* temp=dummy;
+        for(auto &it:nge)
+        {
+            ListNode* newNode=new ListNode(it);
+            insertAtTail(temp,newNode);
+        }
+        return dummy->next;
+    }
+};
