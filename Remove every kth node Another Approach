@@ -1,0 +1,74 @@
+/* Link list Node 
+
+struct Node
+{
+    int data;
+    struct Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+    
+};
+*/
+
+/*You are required to complete this method*/
+
+/* Function to get the middle of the linked list*/
+/*K will always be in range */
+
+class Solution {
+    private:
+        int getLength(Node* head)
+        {
+            int count=0;
+            Node* curr=head;
+            while(curr != NULL)
+            {
+                count++;
+                curr=curr->next;
+            }
+            return count;
+        }
+    public:
+    void solve(Node* curr,Node* prev,int len,int k)
+    {
+        //base case
+        if(len < k)
+        {
+            return;
+        }
+        //move the curr pointer by k-1 
+        for(int i=1;i<=k-1;i++)
+        {
+            prev=curr;
+            curr=curr->next;
+        }
+        
+        Node* nodeToDelete=curr;
+        // cout << curr->data << endl;
+        prev->next=curr->next;
+        nodeToDelete->next=NULL;
+        delete nodeToDelete;
+        solve(prev->next,prev,len-k,k);
+        return;
+        
+    }
+    Node* deleteK(Node *head,int K){
+        //at first we have to calculate the length of the linked list
+        int len=getLength(head);
+        if(len < K)
+        {
+            return NULL;
+        }
+        Node* dummy=new Node(-1);
+        dummy->next=head;
+        Node* prev=dummy;
+        Node* curr=head;
+        solve(curr,prev,len,K);
+        Node* res=dummy->next;
+        delete dummy;
+        return res;
+    }
+};
