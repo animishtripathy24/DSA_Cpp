@@ -1,0 +1,24 @@
+class Solution {
+private:
+    void solve(int index,vector<int>&nums,int xori,int &sum)
+    {
+        if(index >= nums.size())
+        {
+            sum+=xori;
+            return;
+        }
+        //pick
+        xori=xori^nums[index];
+        solve(index+1,nums,xori,sum);
+        xori=xori^nums[index];
+        solve(index+1,nums,xori,sum);
+    }
+public:
+    int subsetXORSum(vector<int>& nums) {
+        int xori=0;
+        int sum=0;
+        vector<int>ds;
+        solve(0,nums,xori,sum);
+        return sum;
+    }
+};
