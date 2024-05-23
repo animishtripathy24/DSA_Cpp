@@ -1,0 +1,43 @@
+class Solution {
+private:
+    bool notContain(vector<int>&nums,int k)
+    {
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            for (int j = i + 1; j < nums.size(); ++j) 
+            {
+                int diff = abs(nums[i] - nums[j]);
+                if(diff == k)
+                {
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    }
+    void solve(int index,vector<int>&nums,vector<int>&v,int k,int &count)
+    {
+        //base case
+        if(index >= nums.size())
+        {
+            if(!v.empty() && notContain(v,k))
+            {
+                count++;
+            }
+            return;
+        }
+        //pick the element
+        v.push_back(nums[index]);
+        solve(index+1,nums,v,k,count);
+        //non pick the element
+        v.pop_back();
+        solve(index+1,nums,v,k,count);
+    }
+public:
+    int beautifulSubsets(vector<int>& nums, int k) {
+        int count=0;
+        vector<int>v;
+        solve(0,nums,v,k,count);
+        return count;
+    }
+};
