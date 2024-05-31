@@ -1,0 +1,89 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    void dfs(TreeNode* node, int target,string &str,string& path) {
+    if (node == NULL) {
+        return;
+    }
+    if (node->val == target) {
+        str+=path;
+        return;
+    }
+    
+    // Search left
+    if (node->left) {
+        path.push_back('L');
+        dfs(node->left, target,str,path);
+        path.pop_back();
+    }
+    
+    // Search right
+    if (node->right) {
+        path.push_back('R');
+        dfs(node->right, target,str,path);
+        path.pop_back();
+    }
+}
+    TreeNode* lowestCommonAncestor(TreeNode* root, int p, int q) {
+        if (root == NULL || root->val == p || root->val == q) {
+            return root;
+        }
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+        if (left == NULL) {
+            return right;
+        } else if (right == NULL) {
+            return left;
+        } else {
+            // we have found our lca node and this is required node
+            return root;
+        }
+    }
+public:
+    string getDirections(TreeNode* root, int startValue, int destValue) {
+        //at first we will find the Lca of both the nodes
+        TreeNode* LCA= lowestCommonAncestor(root,startValue,destValue);
+        if(LCA->val == startValue && LCA->val == destValue)
+        {
+            return "";
+        }
+        if(LCA->val == startValue && LCA->val != destValue)
+        {
+            string temp,ds;
+            dfs(LCA,destValue,temp,ds);
+            return temp;
+        }
+        else if(LCA->val == destValue && LCA->val != startValue)
+        {
+            string temp,ds;
+            dfs(LCA,startValue,temp,ds);
+            for(int i=0;i<temp.size();i++)
+            {
+                temp[i]='U';
+            }
+            return temp;
+        }
+        string str1;
+        string str2;
+        string ds;
+        dfs(LCA,startValue,str1,ds);
+        ds.clear();
+        dfs(LCA,destValue,str2,ds);
+        for(int i=0;i<str1.size();i++)
+        {
+            str1[i]='U';
+        }
+        str1+=str2;
+        return str1;
+    }
+};
