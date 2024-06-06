@@ -1,0 +1,24 @@
+void solve(Node* root,int level,map<int,vector<int>>&m)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    m[level].push_back(root->data);
+    solve(root->left,level+1,m);
+    solve(root->right,level,m);
+}
+vector<int> diagonal(Node *root)
+{
+    map<int,vector<int>>m;
+    solve(root,0,m);
+    vector<int>ans;
+    for(auto &it:m)
+    {
+        for(int i=0;i<it.second.size();i++)
+        {
+            ans.push_back(it.second[i]);
+        }
+    }
+    return ans;
+}
