@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int heightChecker(vector<int>& heights) {
+        map<int,int>m;
+        for(int i=0;i<heights.size();i++)
+        {
+            m[heights[i]]++;
+        }
+        vector<int>ans;
+        for(auto &it:m)
+        {
+            for(int i=0;i<it.second;i++)
+            {
+                ans.push_back(it.first);
+            }
+        }
+        int count=0;
+        for(int i=0;i<heights.size();i++)
+        {
+            if(heights[i] != ans[i])
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+};
