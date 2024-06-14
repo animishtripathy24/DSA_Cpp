@@ -1,0 +1,51 @@
+class Solution
+{
+public:
+
+    Node * removeDuplicates(struct Node *head)
+    {
+        if (head == NULL) return NULL;
+
+        // Create a dummy node to handle edge cases easily
+        Node* dummy = new Node(-1);
+        dummy->next = head;
+        head->prev = dummy;
+
+        // Initialize prev and curr pointers
+        Node* prev = dummy;
+        Node* curr = head;
+
+        while (curr != NULL)
+        {
+            // Check for duplicates
+            while (curr->next != NULL && curr->next->data == curr->data)
+            {
+                Node* next = curr->next;
+                delete curr;
+                curr = next;
+            }
+
+            // Reconnect the prev and curr nodes
+            prev->next = curr;
+            curr->prev = prev;
+
+            // Move the prev pointer to curr
+            prev = curr;
+
+            // Move the curr pointer to next node
+            curr = curr->next;
+        }
+
+        // Handle the case where the end node may have duplicates
+        // prev->next = curr;
+
+        // Set the head of the new list
+        head = dummy->next;
+        if (head != NULL) head->prev = NULL;  // Ensure the new head's prev is NULL
+
+        // Free the dummy node
+        delete dummy;
+
+        return head;
+    }
+};
