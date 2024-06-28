@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+
+void rearrange(vector<int> &arr)
+{
+	//we have to take two arrays
+	vector<int>positive;
+	vector<int>negative;
+	for(int i=0;i<arr.size();i++)
+	{
+		if(arr[i]>=0)
+		{
+			positive.push_back(arr[i]);
+		}
+		else
+		{
+			negative.push_back(arr[i]);
+		}
+	}
+	int i=0;
+	int j=0;
+	int index=0;
+	while(index < arr.size())
+	{
+		if(j<negative.size())
+		{
+			arr[index]=negative[j];
+			index++;
+			j++;
+		}
+		if(i<positive.size())
+		{
+			arr[index]=positive[i];
+			index++;
+			i++;
+		}
+	}
+	return;
+}
