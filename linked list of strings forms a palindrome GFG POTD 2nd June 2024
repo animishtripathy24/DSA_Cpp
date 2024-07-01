@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    bool compute(Node* head) {
+        string str;
+        Node* curr=head;
+        while(curr != NULL)
+        {
+            str+=curr->data;
+            curr=curr->next;
+        }
+        int i=0;
+        int j=str.size()-1;
+        while(i<j)
+        {
+            if(str[i] != str[j])
+            {
+                return 0;
+            }
+            i++;
+            j--;
+        }
+        return 1;
+    }
+};
