@@ -1,0 +1,60 @@
+class Solution {
+private:
+    void findKthLargest(vector<int>& nums, int k,vector<int>&large) {
+        // at first we have to declare a min heap
+        priority_queue<int, vector<int>, greater<int>> pq;
+        // at first we have to insert the first k elements into the queue
+        for (int i = 0; i < k; i++) {
+            pq.push(nums[i]);
+        }
+        for (int i = k; i < nums.size(); i++) {
+            if (nums[i] > pq.top()) {
+                pq.pop();
+                pq.push(nums[i]);
+            }
+        }
+        while(!pq.empty())
+        {
+            large.push_back(pq.top());
+            pq.pop();
+        }
+        return;
+    }
+    void findKthSmallest(vector<int>& nums, int k,vector<int>&small) {
+        // at first we have to declare a min heap
+        priority_queue<int> pq;
+        // at first we have to insert the first k elements into the queue
+        for (int i = 0; i < k; i++) {
+            pq.push(nums[i]);
+        }
+        for (int i = k; i < nums.size(); i++) {
+            if (nums[i] < pq.top()) {
+                pq.pop();
+                pq.push(nums[i]);
+            }
+        }
+        while(!pq.empty())
+        {
+            small.push_back(pq.top());
+            pq.pop();
+        }
+        return;
+    }
+
+public:
+    int minDifference(vector<int>& nums) {
+        if(nums.size()<=4) return 0;
+        vector<int>small;
+        vector<int>large;
+        findKthLargest(nums,4,large);
+        findKthSmallest(nums,4,small);
+        sort(large.begin(),large.end());
+        sort(small.begin(),small.end());
+        int min_diff=INT_MAX;
+        for(int i=0;i<=3;i++)
+        {
+            min_diff=min(min_diff,large[i]-small[i]);
+        }
+        return min_diff;
+    }
+};
