@@ -1,0 +1,37 @@
+// User function Template for C++
+
+/* Linked List node structure
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+*/
+
+class Solution {
+  public:
+    Node* removeAllDuplicates(struct Node* head) {
+        Node* dummy=new Node(-1);
+        dummy->next=head;
+        Node* prev=dummy;
+        Node* curr=head;
+        while(curr != NULL)
+        {
+            if(curr->next && curr->next->data == curr->data)
+            {
+                while(curr->next != NULL && curr->next->data == curr->data)
+                {
+                    curr=curr->next;
+                }
+                prev->next=curr->next;
+            }
+            else
+            {
+                prev=curr;
+            }
+            curr=curr->next;
+        }
+        return dummy->next;
+    }
+};
