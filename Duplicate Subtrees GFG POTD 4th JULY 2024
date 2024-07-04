@@ -1,0 +1,30 @@
+class Solution {
+  private:
+    string getSubTreeString(Node* root,unordered_map<string,int>&m,vector<Node*>&res)
+    {
+        if(root == NULL)
+        {
+            return "N";
+        }
+
+        string s = to_string(root->data)+","+getSubTreeString(root->left,m,res)+","+getSubTreeString(root->right,m,res);
+
+        auto it=m.find(s);
+        if(it != m.end() && it->second == 1)
+        {
+            res.push_back(root);
+        }
+        m[s]++;
+
+        return s;
+    }
+  public:
+    vector<Node*> printAllDups(Node* root) {
+        unordered_map<string,int>m;
+        vector<Node*>res;
+
+        getSubTreeString(root,m,res);
+
+        return res;
+    }
+};
