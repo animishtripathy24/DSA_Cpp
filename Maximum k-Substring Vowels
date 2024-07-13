@@ -1,0 +1,26 @@
+bool isVowel(char ch)
+{
+	return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
+}
+int maxKSubstringVowels(string s, int k) {
+	int maxi = 0;
+	int count = 0;
+	int i = 0;
+	int j = 0;
+	while(j < s.size())
+	{
+		if(isVowel(s[j]))  count++;
+		if(j-i+1 < k)
+		{
+			j++;
+		}
+		else
+		{
+			maxi = max(maxi,count);
+			if(isVowel(s[i]))  count--;
+			i++;
+			j++;
+		}
+	}
+	return maxi;
+}
