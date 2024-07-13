@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        if(s.size()==0)
+        {
+            return 0;
+        }
+        int i=0;
+        int j=0;
+        unordered_map<char,int>m;
+        int maxi = INT_MIN;
+        while(j<s.size())
+        {
+            m[s[j]]++;
+            if(m.size() < (j-i+1))
+            {
+                //it means that some characters are repeating
+                //we have to shrink the window size till it becomes equal to window
+                while(m.size() < (j-i+1))
+                {
+                    m[s[i]]--;
+                    if(m[s[i]]==0)
+                    {
+                        m.erase(s[i]);
+                    }
+                    i++;
+                }
+                j++;
+            }
+            else if(m.size() == (j-i+1))
+            {
+                int sizeOfWindow = (j-i+1);
+                maxi = max(maxi,sizeOfWindow);
+                j++;
+            }
+        }
+        return maxi;
+    }
+};
