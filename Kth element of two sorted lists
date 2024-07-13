@@ -1,0 +1,43 @@
+int getKthElement(vector<int> &firstArr, vector<int> &secondArr, int k) {
+	int i=0;
+	int j=0;
+	int count =0;
+	while(i < firstArr.size() && j < secondArr.size())
+	{
+		if(firstArr[i] < secondArr[j])
+		{
+			count++;
+			if(count == k)
+			{
+				return firstArr[i];
+			}
+			i++;
+		}
+		else{
+			count++;
+			if(count == k){
+				return secondArr[j];
+			}
+			j++;
+		}
+	}
+	while(i < firstArr.size())
+		{
+			count++;
+			if(count == k)
+			{
+				return firstArr[i];
+			}
+			i++;
+		}
+	while(j < secondArr.size())
+		{
+			count++;
+			if(count == k)
+			{
+				return secondArr[j];
+			}
+			j++;
+		}
+	return -1;
+}
