@@ -1,0 +1,19 @@
+int getNegativeNumbersCount(vector<int> &arr) {
+    int low = 0;
+	int high = arr.size() - 1;
+	int ans = -1;
+	while(low <= high)
+	{
+		int mid = low + ((high - low) >> 1);
+		if(arr[mid] >= 0)
+		{
+			high = mid - 1; 
+		}
+		else
+		{
+			ans = mid;
+			low = mid+1;
+		}
+	}
+	return ans + 1;
+}
