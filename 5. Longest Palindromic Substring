@@ -1,0 +1,36 @@
+class Solution {
+private:
+    string check(int i,int j,string &str,int n)
+    {
+        while(i>=0 && j <n && str[i]==str[j])
+        {
+            i--;
+            j++;
+        }
+        return str.substr(i+1,j-i-1);
+    }
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        if(n <=1 )
+        {
+            return s;
+        }
+        int maxi = INT_MIN;
+        string temp = s.substr(0,1);
+        for(int i=0;i<s.size()-1;i++)
+        {
+            string str1 = check(i,i,s,n);
+            if(str1.size() > temp.size())
+            {
+                temp = str1;
+            }
+            string str2 = check(i,i+1,s,n);
+            if(str2.size() > temp.size())
+            {
+                temp = str2;
+            }
+        }
+        return temp;
+    }
+};
