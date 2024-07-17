@@ -1,0 +1,50 @@
+bool allZeros(unordered_map<char,int>&m)
+{
+	for(auto &it:m)
+	{
+		if(it.second != 0)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+int findStartIndexOfSubstring(string s1, string s2) {
+	if(s2.size() > s1.size())
+	{
+		return -1;
+	}
+    unordered_map<char,int>m;
+	for(int i=0;i<s2.size();i++)
+	{
+		m[s2[i]]++;
+	}
+	int i=0;
+	int j=0;
+	int k=s2.size();
+	while(j<s1.size())
+	{
+		if(m.find(s1[j]) != m.end())
+		{
+			m[s1[j]]--;
+		}
+		if(j-i+1 < k)
+		{
+			j++;
+		}
+		else
+		{
+			if(allZeros(m))
+			{
+				return i;
+			}
+			if(m.find(s1[i]) != m.end())
+			{
+				m[s1[i]]++;
+			}
+			i++;
+			j++;
+		}
+	}
+	return -1;
+}
