@@ -1,0 +1,52 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    ListNode* getMiddle(ListNode* head,ListNode* tail)
+    {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast != tail && fast->next != tail)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    TreeNode* buildTree(ListNode* start,ListNode* end)
+    {
+        if(start == end)
+        {
+            return NULL;
+        }
+        ListNode* middle = getMiddle(start,end);
+        TreeNode* root = new TreeNode(middle->val);
+        root->left = buildTree(start,middle);
+        root->right = buildTree(middle->next,end);
+        return root;
+    }
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        TreeNode* root = buildTree(head,NULL);
+        return root;
+    }
+};
