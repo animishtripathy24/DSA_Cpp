@@ -1,0 +1,40 @@
+class Solution {
+  private:
+    int solveMem(vector<int>& wt, vector<int>& val, int W, int n,vector<vector<int>>&t)
+    {
+        // base case
+        if(n == 0 || W == 0)
+        {
+            return 0;
+        }
+        if(t[n][W] != -1)
+        {
+            return t[n][W];
+        }
+        if(wt[n-1] <= W)
+        {
+            // we have two choices
+            // whether we can take it or reject it
+            // the max profit out of the two choices is returned
+            return t[n][W] = max((val[n-1] + solveMem(wt, val, W-wt[n-1], n-1, t)), solveMem(wt, val, W, n-1, t));
+        }
+        if(wt[n-1] > W)
+        {
+            return t[n][W] = solveMem(wt, val, W, n-1, t);
+        }
+        return 0; // To satisfy all return paths
+    }
+
+    int solve(vector<int>& wt, vector<int>& val, int W, int n)
+    {
+        vector<vector<int>>t(n+1,vector<int>(W+1,-1));
+        return solveMem(wt, val, W, n, t);
+    }
+
+  public:
+    // Function to return max value that can be put in knapsack of capacity W.
+    int knapSack(int W, vector<int>& wt, vector<int>& val) {
+        int n = wt.size();
+        return solve(wt, val, W, n);
+    }
+};
